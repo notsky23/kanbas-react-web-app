@@ -1,0 +1,70 @@
+.wd-kanbas-navigation {
+    position: sticky;
+    top: 0;
+    left: 0;
+    background-color: black;
+    list-style: none;
+    padding: 0px;  margin: 0px;
+    width: 85px;
+    height: 100vh;
+}
+.wd-kanbas-navigation li {
+    padding: 5px;     margin-bottom: 10px;
+    font-size: 0.8em;  text-align: center;
+}
+.wd-kanbas-navigation li.wd-active {
+    background-color: white;
+}
+.wd-kanbas-navigation li.wd-active a {
+    color: red;
+}
+.wd-kanbas-navigation a {
+    color: white;
+    text-decoration: none;
+}
+.wd-kanbas-navigation a i {
+    color: red;
+    font-size: 2em;
+    margin-bottom: 5px;
+}
+.wd-kanbas-navigation a .fa-user-circle {
+    color: white;
+}
+
+.wd-kanbas-navigation li.wd-active a .fa-user-circle {
+    color: black;
+}
+
+.wd-kanbas-navigation li.neu-logo {
+    padding-top: 20px;
+}
+#wrapper {
+    display: flex;
+}
+@media (max-width: 576px) {
+    #sidebar {
+        display: none;
+    }
+}
+
+/* Initially hide the sidebar on all screen sizes */
+#sidebar {
+    display: none;
+}
+
+/* From Bootstrap's SM breakpoint (576px) upwards, display the sidebar */
+@media (min-width: 576px) {
+    #sidebar {
+        display: block; /* Or 'flex' if #sidebar is a flex container */
+        position: sticky;
+        top: 0;
+        left: 0;
+        background-color: black;
+        list-style: none;
+        padding: 0px;
+        margin: 0px;
+        width: 85px; /* Adjust based on your design */
+        height: 100vh;
+        margin-right: 30px;
+    }
+}

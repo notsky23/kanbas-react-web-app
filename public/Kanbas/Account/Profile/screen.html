@@ -1,67 +1,111 @@
 <html>
-  <head></head>
+  <head>
+    <link href="/libs/bootstrap/bootstrap.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="/Kanbas/styles.css" />
+    <link rel="stylesheet" href="/Kanbas/Navigation/index.css" />
+    <link rel="stylesheet" href="/Kanbas/Courses/Navigation/index.css" />
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css" />
+  </head>
   <body>
-    <table width="100%">
-      <tbody>
-        <tr>
-          <td valign="top">
-              <ul>
-                <li><a href="/Kanbas/Account/Profile/screen.html">Account</a></li>
-                <li><a href="#">Dashboard</a></li>
-                <li><a href="/Kanbas/Courses/Home/screen.html">Courses</a></li>
-                <li><a href="#">Groups</a></li>
-                <li><a href="#">Calendar</a></li>
-                <li><a href="#">Inbox</a></li>
-                <li><a href="#">History</a></li>
-                <li><a href="#">Commons</a></li>
-                <li><a href="#">Studio</a></li>
-                <li><a href="#">Help</a></li>
-            </ul>
-          </td>
-          <td valign="top">
-            <ul>
-              <li><a href="#">Notifications</a></li>
-              <li><a href="/Kanbas/Account/Profile/screen.html">Profile</a></li>
-              <li><a href="#">Files</a></li>
-              <li><a href="#">Settings</a></li>
-              <li><a href="#">ePortfolios</a></li>
-              <li><a href="#">Shared Content</a></li>
-              <li><a href="#">The Hub</a></li>
-              <li><a href="#">Qwickly Course Tools</a></li>
-              <li><a href="#">Global Announcements</a></li>
-            </ul>
-          </td>
-          
-          <td valign="top">
-            <h4 style="color: dimgray;">Notsky Lou's Profile</h4>
-            <hr /><br>
-            <table width="100%">
-              <tbody>
-                <tr>
-                  <td>
-                      <h2>Notsky Lou</h2>
-                  </td>
-                  <td>
-                      <a href="/Kanbas/Account/Profile/Edit/screen.html"><button>Edit Profile</button></a>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                      <h3>Contact</h3>
-                      No registered services, you can add somme on the <a href="#" style="text-decoration: none;">settings</a> page.
-                      <h3>Biography</h3>
-                      Software Engineer, AI, Robotics, Space, and Car Enthusiast.
-                      <h3>Links</h3>
-                      <a href="#" style="text-decoration: none;">YouTube</a>
-                  </td>
-                  <td>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="container-fluid p-0">
+      <div class="row m-0">
+        <div class="col-auto" id="sidebar">
+          <ul class="wd-kanbas-navigation">
+            <li class="neu-logo">
+              <a href="http://northeastern.edu">
+                 <img src="/images/NEU.png" style="max-width: 65px"/>
+              </a>
+           </li>
+            <li class="wd-active">
+                <a href="/Kanbas/Account/Profile/screen.html">
+                  <i class="fa fa-user-circle"></i><br>
+                Account</a>
+            </li>
+            <li>
+                <a href="/Kanbas/Dashboard/screen.html">
+                  <i class="fa fa-tachometer fa-flip-horizontal"></i><br>
+                Dashboard</a>
+            </li>
+            <li>
+                <a href="/Kanbas/Courses/Home/screen.html">
+                  <i class="fa fa-book"></i><br>
+                Courses</a>
+            </li>
+            <li>
+                <a href="#">
+                  <i class="fa fa-calendar"></i><br>
+                Calendar</a>
+            </li>
+            <li>
+                <a href="#">
+                  <i class="fa fa-inbox"></i><br>
+                Inbox</a>
+            </li>
+            <li>
+                <a href="#">
+                  <i class="fa fa-clock-o fa-flip-horizontal"></i><br>
+                  History</a>
+            </li>
+            <li>
+                <a href="#">
+                  <i class="fa fa-sign-out"></i><br>
+                Commons</a>
+            </li>
+            <li>
+                <a href="#">
+                  <i class="fa fa-youtube-play"></i><br>
+                Studio</a>
+            </li>
+            <li>
+                <a href="#">
+                  <i class="fa fa-question-circle-o"></i><br>
+                Help</a>
+            </li>
+          </ul>
+        </div>
+        <div class="col-auto">
+          <ul class="wd-navigation">
+            <li><a href="#">Notifications</a></li>
+            <li class="wd-active"><a href="/Kanbas/Account/Profile/screen.html">Profile</a></li>
+            <li><a href="#">Files</a></li>
+            <li><a href="#">Settings</a></li>
+            <li><a href="#">ePortfolios</a></li>
+            <li><a href="#">Shared Content</a></li>
+            <li><a href="#">The Hub</a></li>
+            <li><a href="#">Qwickly Course Tools</a></li>
+            <li><a href="#">Global Announcements</a></li>
+          </ul>
+        </div>
+        
+        <div class="col-auto">
+          <h4 style="color: dimgray;">Notsky Lou's Profile</h4>
+          <hr /><br>
+          <table width="100%">
+            <tbody>
+              <tr>
+                <td>
+                    <h2>Notsky Lou</h2>
+                </td>
+                <td>
+                    <a href="/Kanbas/Account/Profile/Edit/screen.html"><button>Edit Profile</button></a>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                    <h3>Contact</h3>
+                    No registered services, you can add somme on the <a href="#" style="text-decoration: none;">settings</a> page.
+                    <h3>Biography</h3>
+                    Software Engineer, AI, Robotics, Space, and Car Enthusiast.
+                    <h3>Links</h3>
+                    <a href="#" style="text-decoration: none;">YouTube</a>
+                </td>
+                <td>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
   </body>
 </html>

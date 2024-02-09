@@ -1,0 +1,77 @@
+.wd-modules, .wd-modules * {
+  border-radius: 0%;
+  border: none;
+  margin: 0px;
+  padding: 0px;
+}
+
+.wd-modules {
+  margin: 5px;
+}
+
+.wd-modules > li {
+  background-color: lightgray;
+  border: 1px solid gray !important;
+  border-left: none !important;
+}
+
+.wd-modules > li > div {
+  padding: 6px;
+  border-left: 1px solid gray !important;
+}
+
+.wd-modules > li > ul > li {
+  padding: 5px;
+  border-top: 1px solid gray !important;
+  border-left: 2px solid green;
+}
+
+.wd-modules > li {
+  margin-bottom: 20px;
+}
+
+.list-group-item a {
+    text-decoration: none !important;
+    color: #000000 !important;
+}
+
+.list-group-item a:hover {
+    color: #555555 !important;
+}
+
+.wd-custom-link h6 {
+    text-decoration: none;
+    color: red;
+    margin-bottom: 0px;
+}
+.wd-custom-link:hover h6 {
+    color: darkred;
+    margin-bottom: 0px;
+}
+
+.wd-custom-link i {
+    color: dimgray
+}
+.wd-custom-link:hover i {
+    color: #505050;
+}
+
+.wd-custom-link p {
+    color: dimgray;
+}
+.wd-custom-link:hover p {
+    color: #505050;
+}
+
+.wd-custom-link a {
+    color: red;
+    text-decoration: none;
+}
+.wd-custom-link:hover a {
+    color: darkred;
+}
+
+#right-column {
+    height: 90vh;
+    overflow-y: auto;
+}

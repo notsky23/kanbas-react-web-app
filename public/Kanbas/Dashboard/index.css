@@ -1,0 +1,23 @@
+.card-body a, .card-body a:hover, .card-body a:focus {
+    text-decoration: none !important;
+}
+
+.card-body a .card-text {
+    display: block; /* Ensure it's displayed as block for margin to take effect */
+    margin-bottom: 1rem;
+    font-weight: normal;
+    color: #6c757d;
+}
+
+.card-title, .card-text {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+}
+
+.card-title {
+    color: navy;
+    font-weight: bold;
+    text-decoration: none !important; /* Ensure no underline */
+}
