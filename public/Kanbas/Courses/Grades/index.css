@@ -1,0 +1,56 @@
+.input-group-text, .form-control, .btn-outline-secondary {
+    height: 38px;
+    border-radius: 0;
+}
+
+.input-group-prepend .input-group-text {
+    border-right: none;
+    border-color: #ced4da;
+}
+
+.form-control {
+    border-color: #ced4da;
+}
+
+.form-control:focus {
+    box-shadow: none;
+    border-color: #ced4da;
+}
+
+.btn-outline-secondary {
+    border-color: #ced4da;
+}
+
+.input-group-append .btn-outline-secondary:focus {
+    box-shadow: none;
+    border-color: #ced4da;
+}
+
+.table thead th,
+.table tbody td {
+  text-align: center;
+  vertical-align: middle;
+}
+
+.table input[type="number"] {
+  width: 75px;
+  text-align: center;
+}
+
+.table input[type="number"]::-webkit-inner-spin-button,
+.table input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.small-icon-btn {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.75rem;
+    height: 20px;
+    text-align: center;
+}
+  
+.small-icon-btn .fa {
+    font-size: 8px;
+}
+  

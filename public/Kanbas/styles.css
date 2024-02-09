@@ -10,3 +10,25 @@ body * {
     height: 90vh;
     overflow-y: auto;
 }
+
+.custom-link-color a {
+    color: red !important;
+    text-decoration: none !important;
+}
+  
+.custom-breadcrumb .breadcrumb-item.active[aria-current="page"] {
+    color: black !important;
+    pointer-events: none;
+    text-decoration: none !important;
+}
+
+/* Hide the default separator */
+.breadcrumb-item + .breadcrumb-item::before {
+    content: none;
+}
+
+/* Add a custom separator */
+.breadcrumb-item + .breadcrumb-item::before {
+    content: " > ";
+    color: #6c757d; /* You can change the color to match your design */
+}
