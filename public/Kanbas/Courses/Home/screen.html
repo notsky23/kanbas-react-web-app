@@ -7,11 +7,28 @@
     <link rel="stylesheet" href="/Kanbas/Courses/Home/index.css" />
     <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   </head>
   <body>
     <div class="container-fluid p-0">
+        <div class="d-block d-md-none bg-black text-white p-3">
+            <div class="d-flex justify-content-between align-items-center text-center">
+                <button class="btn btn-dark" type="button" data-bs-toggle="collapse" data-bs-target="#sidebar" aria-expanded="false" aria-controls="sidebar">
+                    <i class="fa fa-bars text-white"></i>
+                </button>
+                CS5610.12631.202410<br>
+                Modules
+                <div>
+                    <i class="fa fa-eye text-white"></i>
+                    <button class="btn btn-dark" type="button" data-bs-toggle="collapse" data-bs-target="#course-nav" aria-expanded="false" aria-controls="course-nav">
+                        <i class="fa fa-chevron-down text-white"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
         <div class="d-flex">
-            <div id="sidebar" class="d-none d-md-block">
+            <div id="sidebar" class="collapse d-md-block bg-light">
                 <ul class="wd-kanbas-navigation">
                     <li class="neu-logo">
                         <a href="http://northeastern.edu">
@@ -67,7 +84,7 @@
             </div>
 
             <div class="container-fluid p-0">
-                <div style="height:10%">
+                <div class="d-none d-md-block" style="height:10%">
                     <div class="w-100 d-flex justify-content-between align-items-center p-3">
                         <div>
                             <i class="fa fa-ellipsis-v"></i> &emsp; <span style="color: red;">CS5610.12631.202410</span>
@@ -79,8 +96,8 @@
                     <hr style="margin-top: 0px; margin-bottom: 0px;">
                 </div>
 
-                <div class="d-flex" style="height:85%; margin-top: 0px;">
-                    <div id="course-nav" class="d-none d-md-block">
+                <div class="d-flex flex-column flex-md-row" style="height:85%; margin-top: 0px;">
+                    <div id="course-nav" class="collapse d-none d-md-block">
                         <ul class="wd-navigation">
                             <li class="wd-active"><a href="/Kanbas/Courses/Home/screen.html">Home</a></li>
                             <li><a href="/Kanbas/Courses/Modules/screen.html">Modules</a></li>
@@ -102,18 +119,19 @@
                             <li><a href="/Kanbas/Courses/Settings/CourseDetails/screen.html">Settings</a></li>
                         </ul>
                     </div>
-                    <div id="main-column" class="flex-fill">
+                    
+                    <div id="main-column" class="flex-grow-1">
                         <div class="container my-3">
                             <div class="d-flex justify-content-end">
-                                <button class="btn btn-secondary me-2">Collapse All</button>
-                                <button class="btn btn-secondary me-2">View Progress</button>
-                                <select class="form-select me-2" style="width: auto; background-color: #6c757d; color: white;">
+                                <button class="me-2">Collapse All</button>
+                                <button class="me-2">View Progress</button>
+                                <select class="me-2" style="width: auto; background-color: lightgray; color: black;">
                                     <option>Publish All</option>
                                     <option>Unpublish All</option>
                                     <option>Unpublish All</option>
                                 </select>
-                                <button class="btn btn-danger me-2">+ Module</button>
-                                <button class="btn btn-secondary"><i class="fa fa-ellipsis-v"></i></button>
+                                <button class="me-2" style="background-color: red; color: white;">+ Module</button>
+                                <button><i class="fa fa-ellipsis-v"></i></button>
                             </div>
                             <hr />
                     
@@ -287,14 +305,14 @@
     
                     <div id="right-column" class="flex-grow-0 p-2 me-2 d-none d-xl-block" style="width: 250px">
                         <h4>Course Status</h4>
-                        <table style="width: 100%; border-collapse: collapse;">
+                        <table style="width: 100%; border-collapse: collapse; margin-bottom: 0 !important;">
                             <tbody>
                                 <tr>
                                     <td style="padding: 0;">
-                                        <button style="width: 100%; height: 2em; color: dimgray"><i class="fa fa-ban fa-rotate-90 text-secondary"></i> Unpublish</button>
+                                        <button style="width: 100%; height: 2em; color: dimgray; white-space: nowrap; border: 1px solid lightgray"><i class="fa fa-ban fa-rotate-90 text-secondary"></i> Unpublish</button>
                                     </td>
                                     <td style="padding: 0;">
-                                        <button style="width:100%; height: 2em; background-color: rgb(116, 181, 116); color: white"><i class="fa fa-check-circle text-white"></i> Published</button>
+                                        <button style="width:100%; height: 2em; background-color: rgb(116, 181, 116); color: white; white-space: nowrap; border: 1px solid lightgray"><i class="fa fa-check-circle text-white"></i> Published</button>
                                     </td>
                                 </tr>
                             </tbody>
@@ -302,14 +320,42 @@
         
                         <br>
         
-                        <ul class="list-group">
-                            <li class="list-group-item " style="background-color: lightgray;"><a href="#">Import Existing Content</a></li>
-                            <li class="list-group-item" style="background-color: lightgray;"><a href="#">Import From Commons</a></li>
-                            <li class="list-group-item" style="background-color: lightgray;"><a href="#">Choose Home Page</a></li>
-                            <li class="list-group-item" style="background-color: lightgray;"><a href="#">View Course Stream</a></li>
-                            <li class="list-group-item" style="background-color: lightgray;"><a href="#">New Announcement</a></li>
-                            <li class="list-group-item" style="background-color: lightgray;"><a href="#">New Analytics</a></li>
-                            <li class="list-group-item" style="background-color: lightgray;"><a href="#">View Course Notifications</a></li>
+                        <ul class="list-group" style="margin-top: -10;">
+                            <li class="list-group-item " style="background-color: lightgray;">
+                                <a href="#" style="display: block; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" title="Import Existing Content">
+                                    <i class="fa fa-copy"></i> Import Existing Content
+                                </a>
+                            </li>
+                            <li class="list-group-item " style="background-color: lightgray;">
+                                <a href="#" style="display: block; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" title="Import From Commons">
+                                    <i class="fa fa-sign-out"></i> Import From Commons
+                                </a>
+                            </li>
+                            <li class="list-group-item " style="background-color: lightgray;">
+                                <a href="#" style="display: block; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" title="Choose Home Page">
+                                    <i class="fa fa-home"></i> Choose Home Page
+                                </a>
+                            </li>
+                            <li class="list-group-item " style="background-color: lightgray;">
+                                <a href="#" style="display: block; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" title="View Course Stream">
+                                    <i class="fa fa-tv"></i> View Course Stream
+                                </a>
+                            </li>
+                            <li class="list-group-item " style="background-color: lightgray;">
+                                <a href="#" style="display: block; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" title="New Announcement">
+                                    <i class="fa fa-bullhorn"></i> New Announcement
+                                </a>
+                            </li>
+                            <li class="list-group-item " style="background-color: lightgray;">
+                                <a href="#" style="display: block; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" title="New Analytics">
+                                    <i class="fa fa-bar-chart"></i> New Analytics
+                                </a>
+                            </li>
+                            <li class="list-group-item " style="background-color: lightgray;">
+                                <a href="#" style="display: block; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" title="View Course Notifications">
+                                    <i class="fa fa-bell-o"></i> View Course Notifications
+                                </a>
+                            </li>
                         </ul>
         
                         <br>
@@ -317,10 +363,10 @@
                         <table style="width: 100%;">
                             <tbody>
                                 <tr>
-                                    <td>
-                                        <h5>Comming Up</h5>
+                                    <td style="text-align: center; padding-right:30px; white-space: nowrap; width: 50%;">
+                                        <h6 style="font-weight: bold;">Comming Up</h6>
                                     </td>
-                                    <td class="wd-custom-link">
+                                    <td class="wd-custom-link ps-3">
                                         <a href="#">
                                             <i class="fa fa-calendar-check-o"></i> View Calendar
                                         </a>
@@ -354,5 +400,36 @@
 
         </div>
     </div>
+
+    <script>
+        $(document).ready(function() {
+            $('button[data-bs-target="#sidebar"]').click(function() {
+                // Directly toggle sidebar visibility
+                if ($('#sidebar').hasClass('d-none')) {
+                    $('#sidebar').removeClass('d-none').addClass('d-md-block');
+                    $('#main-column').addClass('d-none'); // Optionally hide the main column when sidebar is visible
+                } else {
+                    $('#sidebar').addClass('d-none').removeClass('d-md-block');
+                    $('#main-column').removeClass('d-none'); // Show main column when sidebar is hidden
+                }
+                // Make sure course-nav is hidden when toggling sidebar
+                $('#course-nav').addClass('d-none');
+            });
+
+            $('button[data-bs-target="#course-nav"]').click(function() {
+                // Directly toggle course-nav visibility
+                if ($('#course-nav').hasClass('d-none')) {
+                    $('#course-nav').removeClass('d-none').addClass('d-md-block');
+                    $('#main-column').addClass('d-none'); // Optionally hide the main column when course-nav is visible
+                    $('#sidebar').addClass('d-none'); // Ensure sidebar is hidden when course-nav is visible
+                } else {
+                    $('#course-nav').addClass('d-none').removeClass('d-md-block');
+                    $('#main-column').removeClass('d-none'); // Show main column when course-nav is hidden
+                }
+            });
+        });
+    </script>
+
+      
   </body>
 </html>
