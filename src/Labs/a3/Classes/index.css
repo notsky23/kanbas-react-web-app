@@ -1,0 +1,8 @@
+.wd-bg-yellow    { background-color: lightyellow; }
+.wd-bg-blue      { background-color: lightblue;   }
+.wd-bg-red       { background-color: lightcoral;  }
+.wd-bg-green     { background-color: lightgreen;  }
+.wd-bg-black     { background-color: black;  }
+.wd-fg-black     { color: black;                  }
+.wd-fg-white     { color: white;                  }
+.wd-padding-10px { padding: 10px;                 }

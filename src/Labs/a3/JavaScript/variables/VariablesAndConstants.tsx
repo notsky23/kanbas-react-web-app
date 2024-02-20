@@ -5,7 +5,7 @@ function VariablesAndConstants() {
  
     return(
        <div>
-          <h2>Variables and Constants</h2>
+          <h3>Variables and Constants</h3>
           functionScoped = { functionScoped }<br/>
           blockScoped = { blockScoped }<br/>
           constant1 = { constant1 }<br/>

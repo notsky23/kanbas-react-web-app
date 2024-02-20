@@ -3,10 +3,11 @@ function TernaryOperator() {
     
     return(
         <div>
-           <h2>Logged In</h2>
+           <h3>Logged In</h3>
            { loggedIn ? <p>Welcome</p> : <p>Please login</p> }
         </div>
      )
+    
     
  }
  export default TernaryOperator

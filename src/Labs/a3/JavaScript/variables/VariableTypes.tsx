@@ -8,7 +8,7 @@ function VariableTypes() {
     let isBoolean = typeof booleanVariable;
     return(
       <div>
-        <h2>Variables Types</h2>
+        <h3>Variables Types</h3>
         numberVariable = { numberVariable }<br/>
         floatingPointNumber = { floatingPointNumber }<br/>
         stringVariable = { stringVariable }<br/>
