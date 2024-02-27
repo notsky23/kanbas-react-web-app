@@ -1,0 +1,31 @@
+.card-title {
+    display: block;
+    max-width: 100%; /* Ensure it doesn't exceed the card width */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: navy;
+    font-weight: bold;
+    text-decoration: none !important;
+}
+
+.card-text {
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+    color: #6c757d;
+    font-weight: normal;
+}
+
+.card-subtext {
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+    color: #6c757d;
+    font-weight: normal;
+    font-size: smaller;
+}

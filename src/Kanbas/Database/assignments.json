@@ -1,0 +1,128 @@
+[
+    {
+        "_id": "A101",
+        "title": "Build a Personal Portfolio Page with HTML",
+        "course": "CS101",
+        "description": "Using HTML and CSS, create a personal portfolio page that showcases your projects. Include semantic HTML5 elements and ensure the page is responsive."
+    },
+    {
+        "_id": "A102",
+        "title": "Responsive Web Design with CSS",
+        "course": "CS101",
+        "description": "Design and implement a responsive landing page for a product or service of your choice, incorporating CSS Flexbox and Grid layout systems."
+    },
+    {
+        "_id": "A103",
+        "title": "Interactive Web Design with Javascript",
+        "course": "CS101",
+        "description": "Develop an interactive web application using JavaScript for dynamic content manipulation and React for component-based architecture."
+    },
+    {
+        "_id": "A201",
+        "title": "Setting Up Your Android Development Environment",
+        "course": "CS102",
+        "description": "Install Android Studio and configure a virtual device for testing your first Android application."
+    },
+    {
+        "_id": "A202",
+        "title": "Building a User Interface",
+        "course": "CS102",
+        "description": "Design and implement a user interface using XML in Android Studio that includes at least one activity with various UI components."
+    },
+    {
+        "_id": "A203",
+        "title": "Implementing Android Navigation",
+        "course": "CS102",
+        "description": "Create a multi-activity Android app that demonstrates the use of navigation patterns and material design principles."
+    },
+    {
+        "_id": "A301",
+        "title": "Design and Build a Simple Robot",
+        "course": "CS103",
+        "description": "Using the concepts learned in the 'Robotics Fundamentals' module, design and build a simple robot that can perform basic tasks, incorporating sensors and actuators."
+    },
+    {
+        "_id": "A302",
+        "title": "Implement a PID Controller for Robot Motion",
+        "course": "CS103",
+        "description": "Apply the 'Robot Control Systems' module lessons to implement a PID controller to manage the stability and movement of your robot."
+    },
+    {
+        "_id": "A303",
+        "title": "Develop a Robot Simulation using ROS",
+        "course": "CS103",
+        "description": "Leverage the 'Robotics Software Development' module to develop a simulation of a robot using ROS and Gazebo, showcasing autonomous navigation capabilities."
+    },
+    {
+        "_id": "A401",
+        "title": "Sorting Algorithm Analysis",
+        "course": "CS104",
+        "description": "Analyze and compare the efficiency of different sorting algorithms on various datasets."
+    },
+    {
+        "_id": "A402",
+        "title": "Implementing Data Structures",
+        "course": "CS104",
+        "description": "Implement basic data structures like stacks, queues, linked lists, trees, and hash tables, and demonstrate their applications."
+    },
+    {
+        "_id": "A403",
+        "title": "Solving Problems with Advanced Algorithms",
+        "course": "CS104",
+        "description": "Apply dynamic programming, greedy algorithms, and explore the concept of NP-completeness through specific problem-solving exercises."
+    },
+    {
+        "_id": "A501",
+        "title": "AI Historical Milestones Essay",
+        "course": "CS105",
+        "description": "Write an essay on the historical milestones of AI, focusing on key developments and their impact on the field."
+    },
+    {
+        "_id": "A502",
+        "title": "Machine Learning Algorithm Implementation",
+        "course": "CS105",
+        "description": "Implement and evaluate a supervised learning algorithm and an unsupervised learning algorithm using a chosen dataset."
+    },
+    {
+        "_id": "A503",
+        "title": "AI Application Project",
+        "course": "CS105",
+        "description": "Develop a project that applies AI in a practical context, such as natural language processing, computer vision, or robotics."
+    },
+    {
+        "_id": "A601",
+        "title": "Supervised Learning Project",
+        "course": "CS106",
+        "description": "Develop a project that applies supervised learning techniques, such as linear regression or classification algorithms, to a dataset of your choice."
+    },
+    {
+        "_id": "A602",
+        "title": "Deep Learning Experiment",
+        "course": "CS106",
+        "description": "Experiment with deep learning frameworks to build and train a neural network model, focusing on either CNNs for image processing or RNNs for sequence prediction."
+    },
+    {
+        "_id": "A603",
+        "title": "Advanced ML Techniques Research",
+        "course": "CS106",
+        "description": "Conduct a research project on an advanced machine learning topic, such as Natural Language Processing, Generative Adversarial Networks, or Reinforcement Learning, demonstrating understanding and application of the concept."
+    },
+    {
+        "_id": "A701",
+        "title": "Exploring LLM Fundamentals",
+        "course": "CS107",
+        "description": "Create a comprehensive report that explores the fundamentals, architecture, and training processes of large language models. Include an analysis of a specific LLM architecture like the Transformer model."
+    },
+    {
+        "_id": "A702",
+        "title": "LLM Application Project",
+        "course": "CS107",
+        "description": "Develop a project that utilizes a large language model for an application in natural language understanding or content generation. Address potential ethical considerations and biases in your project."
+    },
+    {
+        "_id": "A703",
+        "title": "Research on Advanced LLM Topics",
+        "course": "CS107",
+        "description": "Conduct research on an advanced topic related to large language models, such as improving efficiency, exploring multimodal LLMs, or analyzing their societal impact. Present your findings in a detailed paper."
+    }
+]
