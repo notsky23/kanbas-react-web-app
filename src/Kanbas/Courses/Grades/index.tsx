@@ -53,15 +53,30 @@ function Grades() {
 
                     <tbody>
                         {es.map((enrollment) => {
-                        const user = users.find((user) => user._id === enrollment.user);
-                        return (
-                            <tr>
-                            <td className="p-3 text-danger" style={{ fontWeight: "bold", width: "25%" }}>{user?.firstName} {user?.lastName}</td>
-                            {assignments.map((assignment) => {
-                                const grade = grades.find(
-                                (grade) => grade.student === enrollment.user && grade.assignment === assignment._id && grade.course === courseId);
-                                return (<td className="p-3 text-center" style={{ width: `${75 / as.length}%` }} >{grade?.grade || ""}</td>);})}
-                            </tr>);
+                            const user = users.find((user) => user._id === enrollment.user);
+                            return (
+                                <tr>
+                                    <td className="p-3 text-danger" style={{ fontWeight: "bold", width: "25%" }}>
+                                        {user?.firstName} {user?.lastName}
+                                    </td>
+                                    {assignments.map((assignment) => {
+                                        const grade = grades.find(
+                                            (grade) => grade.student === enrollment.user && grade.assignment === assignment._id && grade.course === courseId
+                                        );
+                                        return (<td className="p-3 text-center" style={{ width: `${75 / as.length}%` }} >
+                                            {/* {grade?.grade || ""} */}
+                                            <input
+                                                type="number"
+                                                className="form-control"
+                                                defaultValue={grade?.grade || ""}
+                                                min={0}
+                                                max={100}
+                                                onChange={(e) => 
+                                                    console.log('New grade: ${e.target.value}')
+                                                }
+                                            />
+                                        </td>);})}
+                                </tr>);
                         })}
                     </tbody>
                 </table>
