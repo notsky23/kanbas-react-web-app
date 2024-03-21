@@ -10,15 +10,20 @@ import AssignmentEditor from "./Assignments/Editor";
 import Grades from "./Grades";
 import "../../styles.css";
 import { FaEye } from "react-icons/fa";
+import { Course } from "../../Kanbas";
 
-function Courses() {
-    const { courseId, assignmentId } = useParams();
-    const course = courses.find((course) => course._id === courseId);
+function Courses({ courses, setLastVisitedCourseId }: { courses: Course[]; setLastVisitedCourseId: (id: string) => void; }) {
+    const { courseId } = useParams<{ courseId: string }>();
     const location = useLocation();
-
     const [isNavVisible, setIsNavVisible] = useState(true);
 
+    const course = courses.find((course) => course._id === courseId);
+
     useEffect(() => {
+        if (courseId) {
+            setLastVisitedCourseId(courseId);
+          }
+
         function handleResize() {
             // Example: Hide navigation bars under 768px
             setIsNavVisible(window.innerWidth >= 768);
@@ -28,7 +33,7 @@ function Courses() {
         handleResize(); // Initialize on component mount
 
         return () => window.removeEventListener('resize', handleResize);
-    }, []);
+    }, [courseId, setLastVisitedCourseId]);
 
     const mainContentStyle: CSSProperties = {
         top: "100px",

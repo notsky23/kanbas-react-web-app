@@ -1,8 +1,12 @@
 .wd-modules, .wd-modules * {
-  border-radius: 0%;
-  border: none;
+  /* border-radius: 0%; */
+  /* border: none; */
   margin: 0px;
   padding: 0px;
+}
+
+.wd-modules button {
+  border-radius: .25rem; /* Adjust this value as needed */
 }
 
 .wd-modules {

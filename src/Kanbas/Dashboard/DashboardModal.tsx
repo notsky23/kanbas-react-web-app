@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { Course } from "./index";
+import { Course } from "../index";
 
 interface DashboardModalProps {
   isOpen: boolean;
   onClose: () => void;
   onSubmit: (newCourseData: any, editing?: boolean) => void;
   editingCourse?: Course | null;
+  setEditingCourse: React.Dispatch<React.SetStateAction<Course | null>>;
 }
 
-function DashboardModal({ isOpen, onClose, onSubmit, editingCourse }: DashboardModalProps) {
+function DashboardModal({ isOpen, onClose, onSubmit, editingCourse, setEditingCourse }: DashboardModalProps) {
     const [name, setName] = useState(editingCourse?.name || "");
     const [number, setNumber] = useState(editingCourse?.number || "");
     const [section, setSection] = useState(editingCourse?.section || "");
