@@ -3,7 +3,7 @@ import { assignments } from "../../Database";
 
 const initialState = {
     assignments: assignments,
-    assignment: { title: "New Title", course: "New Course", description: "New Description" } as
+    assignment: { title: "", course: "", description: "", points: 100 } as
         { title: string; course: string; description: string; } | null,
 };
 
@@ -12,10 +12,11 @@ const assignmentsSlice = createSlice({
   initialState,
   reducers: {
     addAssignment: (state, action) => {
-        state.assignments = [
-            ...state.assignments,
-            { ...action.payload, _id: new Date().getTime().toString() },
-        ];
+        state.assignments.push({
+            ...action.payload,
+            course: action.payload.course || state.assignment?.course,
+            _id: action.payload._id || new Date().getTime().toString(),
+        });
     },
     deleteAssignment: (state, action) => {
         state.assignments = state.assignments.filter(
@@ -27,7 +28,7 @@ const assignmentsSlice = createSlice({
             if (assignment._id === action.payload._id) {
                 return action.payload;
             } else {
-                return module;
+                return assignment;
             }
         });
     },
