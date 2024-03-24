@@ -86,44 +86,49 @@ function DashboardModal({ isOpen, onClose, onSubmit, editingCourse, setEditingCo
         <div className="modal-backdrop">
             <div className="modal-content">
                 <form onSubmit={handleSubmit}>
-                    <h3>Course:</h3>
-                    <br />
-                    <div className="row mb-3">
-                        <label htmlFor="name" className="col-sm-3 form-label text-end">Course Name</label>
-                        <div className="col-sm-9">
-                            <input id="name" name="name" value={name} onChange={(e) => setName(e.target.value)} placeholder="Web Development" className="form-control" />
-                        </div>
+                    <div className="modal-header">
+                        <h3>Course:</h3>
+                        <button type="button" className="btn-close" data-dismiss="modal" aria-label="Close" onClick={onClose}></button>
                     </div>
-                    <div className="row mb-3">
-                        <label htmlFor="number" className="col-sm-3 form-label text-end">Course Number</label>
-                        <div className="col-sm-9">
-                            <input id="number" name="number" value={number} onChange={(e) => setNumber(e.target.value)} placeholder="CS5610" className="form-control" />
-                        </div>
-                    </div>
-                    <div className="row mb-3">
-                        <label htmlFor="section" className="col-sm-3 form-label text-end">Course Section</label>
-                        <div className="col-sm-9">
-                            <input id="section" name="section" value={section} onChange={(e) => setSection(e.target.value)} placeholder="10001" className="form-control" />
-                        </div>
-                    </div>
-                    <div className="row mb-3">
-                        <label htmlFor="startDate" className="col-sm-3 form-label text-end">Start Date</label>
-                        <div className="col-sm-9">
-                            <input id="startDate" name="startDate" value={startDate} onChange={(e) => setStartDate(e.target.value)} className="form-control" type="date" />
-                        </div>
-                    </div>
-                    <div className="row mb-3">
-                        <label htmlFor="endDate" className="col-sm-3 form-label text-end">End Date</label>
-                        <div className="col-sm-9">
-                            <input id="endDate" name="endDate" value={endDate} onChange={(e) => setEndDate(e.target.value)} className="form-control" type="date" />
-                        </div>
-                    </div>
-                    <input name="semester" type="hidden" value={semester} />
-                    <input name="sem" type="hidden" value={sem} />
+                    <hr /><br />
 
-                    <br /> <br />
+                    <div className="modal-body">
+                        <div className="row mb-3">
+                            <label htmlFor="name" className="col-sm-3 form-label text-md-end">Course Name</label>
+                            <div className="col-sm-9">
+                                <input id="name" name="name" value={name} onChange={(e) => setName(e.target.value)} placeholder="Web Development" className="form-control" />
+                            </div>
+                        </div>
+                        <div className="row mb-3">
+                            <label htmlFor="number" className="col-sm-3 form-label text-md-end">Course Number</label>
+                            <div className="col-sm-9">
+                                <input id="number" name="number" value={number} onChange={(e) => setNumber(e.target.value)} placeholder="CS5610" className="form-control" />
+                            </div>
+                        </div>
+                        <div className="row mb-3">
+                            <label htmlFor="section" className="col-sm-3 form-label text-md-end">Course Section</label>
+                            <div className="col-sm-9">
+                                <input id="section" name="section" value={section} onChange={(e) => setSection(e.target.value)} placeholder="10001" className="form-control" />
+                            </div>
+                        </div>
+                        <div className="row mb-3">
+                            <label htmlFor="startDate" className="col-sm-3 form-label text-md-end">Start Date</label>
+                            <div className="col-sm-9">
+                                <input id="startDate" name="startDate" value={startDate} onChange={(e) => setStartDate(e.target.value)} className="form-control" type="date" />
+                            </div>
+                        </div>
+                        <div className="row mb-3">
+                            <label htmlFor="endDate" className="col-sm-3 form-label text-md-end">End Date</label>
+                            <div className="col-sm-9">
+                                <input id="endDate" name="endDate" value={endDate} onChange={(e) => setEndDate(e.target.value)} className="form-control" type="date" />
+                            </div>
+                        </div>
+                        <input name="semester" type="hidden" value={semester} />
+                        <input name="sem" type="hidden" value={sem} />
+                    </div>
+                    <br /><hr />
 
-                    <div className="d-flex justify-content-end">
+                    <div className="modal-footer">
                         <button type="submit" className="btn btn-primary me-2">Submit</button>
                         <button type="button" className="btn btn-secondary" onClick={onClose}>Cancel</button>
                     </div>

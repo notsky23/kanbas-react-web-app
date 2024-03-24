@@ -24,7 +24,7 @@ function Assignments() {
 };
 
   return (
-    <div className="me-5">
+    <div className="me-0 pe-2 pe-md-4">
 
         <table style={{ width:"100%" }}>
             <tbody>
@@ -58,11 +58,14 @@ function Assignments() {
             </div>
             <ul className="list-group">
                 {assignmentList.map((assignment) => (
-                <li className="list-group-item">
-                    <FaEllipsisV className="me-2" />
-                    <Link
-                    to={`/Kanbas/Courses/${courseId}/Assignments/${assignment._id}`}>{assignment.title}</Link>
-                    <span className="float-end">
+                <li className="list-group-item d-flex justify-content-between align-items-center">
+                    <div className="d-flex align-items-center">
+                        <FaEllipsisV className="me-2" />
+                        <Link to={`/Kanbas/Courses/${courseId}/Assignments/${assignment._id}`}>
+                            {assignment.title}
+                        </Link>
+                    </div>
+                    <span className="float-end text-nowrap">
                         <button
                             className="btn btn-danger px-2 me-3"
                             onClick={() => handleDelete(assignment._id)} style={{ cursor: 'pointer' }} >

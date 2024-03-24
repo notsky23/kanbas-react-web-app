@@ -5,19 +5,20 @@ import "./index.css";
 
 function Grades() {
   const { courseId } = useParams();
+  const validAssignmentIds = ['A101', 'A102', 'A103'];
   const as = assignments.filter((assignment) => assignment.course === courseId);
   const es = enrollments.filter((enrollment) => enrollment.course === courseId);
   
     return (
-        <div className="flex-grow-1">
-            <div className="d-flex justify-content-end me-4">
+        <div className="flex-grow-1 pe-2 pe-md-4">
+            <div className="d-flex justify-content-end">
                 <button className="btn btn-outline-secondary m-1 text-center" style={{ height: "3em" }}><FaFileImport /> Import</button>
                 <button className="btn btn-outline-secondary m-1 text-center" style={{ height: "3em" }}><FaFileExport /> Export</button>
                 <button className="btn btn-outline-secondary m-1 border rounded text-center" style={{ height: "3em", border: "1px solid dimgray" }}><FaCog /></button>
             </div>
 
             <div className="d-flex flex-wrap">
-                `<div className="flex-fill p-4">
+                <div className="flex-fill p-4">
                     <h6 style={{ fontWeight: "bold" }}>Student Names</h6>
                     <div className="input-group mb-3">
                         <div className="input-group-prepend">
@@ -30,7 +31,7 @@ function Grades() {
                     </div>
                     <button className="btn btn-outline-secondary btn-sm"><FaFilter /> Apply Filters</button>
                 </div>
-                <div className="flex-fill p-4">
+                <div className="flex-fill p-4 pe-0">
                     <h6 style={{ fontWeight: "bold" }}>Assignment Names</h6>
                     <div className="input-group mb-3">
                         <div className="input-group-prepend">
@@ -44,26 +45,27 @@ function Grades() {
                 </div>`
             </div>
 
-            <div className="table-responsive me-4">
+            <div className="table-responsive">
                 <table className="table table-striped table-bordered table-fixed-layout">
                     <thead className="fs-6">
-                        <th style={{ width: "25%" }} >Student Name</th>
+                        <th className="py-2" style={{ width: "25%" }} >Student Name</th>
                         {as.map((assignment) => (
-                            <th className="text-center" style={{ width: `${75 / as.length}%` }} >
+                            <th className="py-2 text-center" style={{ width: `${75 / as.length}%` }} >
                                 {assignment.title}
                             </th>
                         ))}
                     </thead>
 
                     <tbody>
-                        {es.map((enrollment) => {
+                        {es.map((enrollment, index) => {
                             const user = users.find((user) => user._id === enrollment.user);
+
                             return (
                                 <tr>
                                     <td className="p-3 text-danger" style={{ fontWeight: "bold", width: "25%" }}>
                                         {user?.firstName} {user?.lastName}
                                     </td>
-                                    {assignments.map((assignment) => {
+                                    {as.map((assignment) => {
                                         const grade = grades.find(
                                             (grade) => grade.student === enrollment.user && grade.assignment === assignment._id && grade.course === courseId
                                         );
@@ -72,7 +74,7 @@ function Grades() {
                                                 {/* {grade?.grade || ""} */}
                                                 <input
                                                     type="number"
-                                                    className="form-control"
+                                                    className="form-control text-center"
                                                     defaultValue={grade?.grade || ""}
                                                     min={0}
                                                     max={100}

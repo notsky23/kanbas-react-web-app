@@ -7,7 +7,18 @@ import { LuMonitorPlay } from "react-icons/lu";
 import { TfiHelpAlt } from "react-icons/tfi";
 import { PiArrowLineLeft  } from "react-icons/pi";
 
-function KanbasNavigation() {
+interface KanbasNavigationProps {
+  toggleModal?: () => void;
+  isModal?: boolean;
+}
+
+function KanbasNavigation({ toggleModal, isModal = false }: KanbasNavigationProps) {
+  const handleLinkClick = () => {
+    if (isModal && toggleModal) {
+      toggleModal();
+    }
+  };
+
   const links = [
     { label: "",            icon: <img src="/images/NEU.png" alt="NEU Logo" style={{ maxWidth: '65px' }} />, customClass: 'neu-logo' },
     { label: "Account",     icon: <RiAccountCircleFill className="fs-2 account-icon icon-height" />  },
@@ -32,7 +43,7 @@ function KanbasNavigation() {
             return <li key={index} className="spacer"></li>; // Render a spacer item
           }
           return (
-            <li key={index} className={`${link.label && pathname.includes(link.label) ? "wd-active" : "" } ${link.customClass || ''}`} >
+            <li key={index} className={`${link.label && pathname.includes(link.label) ? "wd-active" : "" } ${link.customClass || ''}`} onClick={handleLinkClick}>
                 <Link to={`/Kanbas/${link.label}`}>
                     {link.icon}
                     {link.label && <span className="nav-label">{link.label}</span>}

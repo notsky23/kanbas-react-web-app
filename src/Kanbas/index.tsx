@@ -8,6 +8,7 @@ import * as db from "./Database";
 import { useState } from "react";
 import store from "./store";
 import { Provider } from "react-redux";
+import TopMenuBar from "./TopMenuBar";
 
 export interface Course {
    _id: string;
@@ -27,7 +28,6 @@ function Kanbas() {
       return savedCourses ? JSON.parse(savedCourses) : db.courses;
     });
     const [editingCourse, setEditingCourse] = useState<Course | null>(null);
-
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const addOrEditCourse = (newCourseData: Omit<Course, '_id'>) => {
@@ -59,22 +59,17 @@ function Kanbas() {
 
     return(
       <Provider store={store}>
+         <div className="d-block d-md-none sticky-top bg-black text-white p-3">
+            <TopMenuBar courses={courses} />
+         </div>
          <div className="d-flex">
-            {/* <Link to="/Labs/a3">A3</Link> |
-            <Link to="/Kanbas">Kanbas</Link> |
-            <Link to="/hello">Hello</Link> | */}
-
-            {/* <div>
-               <Nav />
-               <h1>Kanbas</h1>
-            </div> */}
             <div className="d-none d-md-block">
                <KanbasNavigation />
             </div>
             <div style={{ flexGrow: 1 }}>
                <Routes>
                   <Route path="/" element={<Navigate to="Dashboard" />} />
-                  <Route path="Account" element={<h1>Account</h1>} />
+                  <Route path="Account" element={<div className="p-3"><h1>Account</h1></div>} />
                   <Route path="Dashboard" element={
                      <Dashboard
                         courses={courses}

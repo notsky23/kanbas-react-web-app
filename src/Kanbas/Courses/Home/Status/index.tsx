@@ -8,7 +8,7 @@ function preventNavigation(e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) {
 
 function StatusNavigation() {
     return(
-        <div id="right-column" className="flex-grow-0 p-2 me-2 d-none d-xl-block" style={{ width: "250px"}}>
+        <div id="right-column" className="p-2 d-none d-xl-block" style={{ width: "250px"}}>
             <h4>Course Status</h4>
             <table style={{ width: "100%", borderCollapse: "collapse", marginBottom: 0 }} >
                 <tbody>

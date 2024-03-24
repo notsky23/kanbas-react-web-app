@@ -38,8 +38,8 @@ function Courses({ courses, setLastVisitedCourseId }: { courses: Course[]; setLa
     const mainContentStyle: CSSProperties = {
         top: "100px",
         left: isNavVisible ? "320px" : "10px",
-        right: isNavVisible ? "0" : "0", // Adjust this based on your right navigation visibility
-        position: "fixed",
+        right: isNavVisible ? "0" : "0",
+        position: "absolute",
         overflowY: "scroll",
         bottom: "0",
     };
@@ -76,33 +76,40 @@ function Courses({ courses, setLastVisitedCourseId }: { courses: Course[]; setLa
   };
 
   return (
-    <div className="p-4">
-        <div className="d-flex justify-content-between align-items-center">
+    <div className="container-fluid px-3 p-md-4">
+        <div className="row d-none d-md-flex">
             {/* Breadcrumbs */}
-            <div className="d-flex align-items-center">
-                <HiMiniBars3 className="courseDescription" /> &emsp;
-                <nav aria-label="breadcrumb">
-                    <ol className="breadcrumb custom-breadcrumb custom-link-color" style={{ marginBottom: 0, backgroundColor: "transparent", paddingLeft: "0.5rem" }}>
-                        {course && (
-                            <li className="breadcrumb-item">
-                                <Link to={`/Kanbas/Courses/${courseId}`}>{course.number}.{course.section}.{course.sem}</Link>
-                            </li>
-                        )}
-                        {getBreadcrumbs()}
-                    </ol>
-                </nav>
+            <div className="col-12 d-flex justify-content-between align-items-center">
+                <div className='d-flex'>
+                    <HiMiniBars3 className="courseDescription" /> &emsp;
+                    <nav aria-label="breadcrumb">
+                        <ol className="breadcrumb custom-breadcrumb custom-link-color" style={{ marginBottom: 0, backgroundColor: "transparent", paddingLeft: "0.5rem" }}>
+                            {course && (
+                                <li className="breadcrumb-item">
+                                    <Link to={`/Kanbas/Courses/${courseId}`}>{course.number}.{course.section}.{course.sem}</Link>
+                                </li>
+                            )}
+                            {getBreadcrumbs()}
+                        </ol>
+                    </nav>
+                </div>
+                {/* Student View Button */}
+                <button className="me-4"><FaEye /> Student View</button>
             </div>
-            {/* Student View Button */}
-            <button className="me-5"><FaEye /> Student View</button>
         </div>
-        <hr />
-
-        <div className="d-none d-md-block">
-            <CourseNavigation />
+        <div>
+            <hr />
         </div>
         
-        <div>
-            <div style={mainContentStyle}>
+        <div className='row'>
+            {/* Course Navigation */}
+            <div className="col-auto d-none d-lg-block me-0">
+                <CourseNavigation />
+            </div>
+
+            {/* Main Body */}
+            {/* <div style={mainContentStyle}> */}
+            <div className='col pe-0 me-0'>
                 <Routes>
                     <Route path="/" element={<Navigate to="Home" />} />
                     <Route path="Home" element={<Home />} />

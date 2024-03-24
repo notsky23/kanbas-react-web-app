@@ -57,25 +57,25 @@ function ModuleList() {
         {/* <button className="btn btn-primary" onClick={ updateModule }>Update</button> */}
         <button className="btn btn-primary" onClick={() => dispatch(updateModule(module)) }>Update</button>
         <li className="list-group-item">
-          <li>
+          <div className="d-flex align-items-center">
+            <FaEllipsisV className="me-2" />
             <h3>Add Modules</h3>
-          </li>
-          <ul>
-            <li>
-              <input
-                className="form-control"
-                value={module.name}
-                onChange={(e) => dispatch(setModule({ ...module, name: e.target.value }))}
-              />
-            </li>
-            <li>
-              <textarea
-                className="form-control"
-                value={module.description}
-                onChange={(e) => dispatch(setModule({ ...module, description: e.target.value }))}
-              />
-            </li>
-          </ul>
+          </div>
+
+          <div>
+            <input
+              className="form-control p-2"
+              value={module.name}
+              onChange={(e) => dispatch(setModule({ ...module, name: e.target.value }))}
+            />
+          </div>
+          <div>
+            <textarea
+              className="form-control p-2"
+              value={module.description}
+              onChange={(e) => dispatch(setModule({ ...module, description: e.target.value }))}
+            />
+          </div>
         </li>
 
         {moduleList
@@ -86,13 +86,14 @@ function ModuleList() {
               className={`list-group-item ${selectedModuleId === module._id ? 'selected' : ''}`}
               onClick={() => handleSelectModule(module._id)}
             >
-              <div>
-                <FaEllipsisV className="me-2" />
-                {module.name}
-                <span className="float-end">
-                  <button className="btn btn-warning px-2 me-1" onClick={() => {
-                    // event.stopPropagation();
-                    // handleEditModule(module);
+              <div className="d-flex justify-content-between align-items-center">
+                <div className="d-flex align-items-center">
+                  <FaEllipsisV className="me-2" />
+                  {module.name}
+                </div>
+                <div className="text-nowrap">
+                  <button className="btn btn-warning px-2 me-1" onClick={(e) => {
+                    e.stopPropagation();
                     dispatch(setModule(module))
                   }}>
                     Edit
@@ -103,10 +104,10 @@ function ModuleList() {
                   <FaCheckCircle className="text-success" />
                   <FaPlusCircle className="ms-2" />
                   <FaEllipsisV className="ms-2" />
-                </span>
+                </div>
               </div>
               {selectedModuleId === module._id && (
-                <ul className="list-group">
+                <ul className="list-group mt-2">
                   {module.lessons?.map((lesson: Lesson, index: number) => (
                     <li className="list-group-item" key={index}>
                       <FaEllipsisV className="me-2" />

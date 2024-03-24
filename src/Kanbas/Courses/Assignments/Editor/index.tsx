@@ -86,9 +86,8 @@ function AssignmentEditor() {
     };
 
     return (
-        <div className="me-5">
+        <div className="flex-grow-1 pe-2 pe-md-3">
             <div className="d-flex justify-content-end">
-                <h3>{assignmentId}</h3>
                 <button className="btn btn-light text-success" style={{ height: "2em" }}><FaCheckCircle /> Published</button>
                 <button className="btn btn-light border rounded" style={{ height: "2em", border: "1px solid dimgray" }}><FaEllipsisV /> </button>
             </div>

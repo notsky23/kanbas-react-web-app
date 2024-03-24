@@ -54,17 +54,17 @@ function Dashboard(
   // }, [courses]);
 
   return (
-    <div className="p-4">
+    <div className="p-3 p-md-4">
       <div className="d-flex justify-content-between justify-content-xs-end align-items-center">
         <h1>Dashboard</h1>
         {/* <button className="btn btn-success me-2" onClick={addNewCourse}><FaPlusCircle />&nbsp;Add Course</button> */}
-        <button className="btn btn-success me-5" onClick={() => setIsModalOpen(true)}><FaPlusCircle />&nbsp; Add Course</button>
+        <button className="btn btn-success me-1" onClick={() => setIsModalOpen(true)}><FaPlusCircle />&nbsp; Add Course</button>
       </div>
       <hr />
       <h2>Published Courses ({courses.length})</h2>
       <hr />
       <div className="row">
-        <div className="row row-cols-1 row-cols-md-5 g-4">
+        <div className="row row-cols-1 row-cols-md-5 g-3">
           {courses.map((course) => (
             <div key={course._id} className="col" style={{ width: 305 }}>
               <div className="card">

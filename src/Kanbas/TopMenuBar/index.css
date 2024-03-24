@@ -1,0 +1,37 @@
+@keyframes slideInFromLeft {
+    from {
+      transform: translateX(-100%);
+    }
+    to {
+      transform: translateX(0);
+    }
+}
+
+.modal-left .modal-dialog {
+    position: fixed;
+    margin: auto;
+    width: 100%;
+    max-width: none;
+    height: 100%;
+}
+  
+.modal-left.modal-open .modal-dialog {
+    /* Apply the animation when the modal is opened */
+    animation: slideInFromLeft 0.2s ease-out forwards;
+}
+  
+.modal-backdrop.show {
+    opacity: 0.5;
+}
+
+.dropdown-list {
+    position: relative;
+    z-index: 1000; /* Ensure it's above other content */
+    width: 100%;
+    background-color: white;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2); /* Optional: adds a shadow for better visibility */
+    top: 100%; /* Position directly below the button */
+    left: 0;
+    height: 30vh;
+    overflow-y: auto;
+}
