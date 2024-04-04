@@ -7,7 +7,9 @@ interface ErrorMessages {
 
 function WorkingWithArrays() {
   const API = "http://localhost:4000/a5/todos";
-  const API_BASE = "https://kanbas-node-server-app-vvg4.onrender.com/a5/todos";
+  // const API_BASE = "https://kanbas-node-server-app-vvg4.onrender.com/a5/todos";
+  const API_BASE1 = process.env.REACT_APP_API_BASE?.replace(/\/+$/, "");
+  const API_BASE = `${API_BASE1}/a5/todos`;
 
   const [errorMessages, setErrorMessages] = useState<ErrorMessages>({});
 

@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 function WorkingWithObjects() {
-  const API_BASE = "https://kanbas-node-server-app-vvg4.onrender.com";
+  // const API_BASE = "https://kanbas-node-server-app-vvg4.onrender.com";
+  const API_BASE = process.env.REACT_APP_API_BASE?.replace(/\/+$/, "");
   
   const [assignment, setAssignment] = useState({
     id: 1, title: "NodeJS Assignment",

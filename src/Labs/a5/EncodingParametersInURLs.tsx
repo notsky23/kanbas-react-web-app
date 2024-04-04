@@ -5,7 +5,7 @@ function EncodingParametersInURLs() {
   const [a, setA] = useState(34);
   const [b, setB] = useState(23);
   const [welcome, setWelcome] = useState("");
-  const API_BASE = process.env.REACT_APP_API_BASE;
+  const API_BASE = process.env.REACT_APP_API_BASE?.replace(/\/+$/, "");
   // const API_BASE = "https://kanbas-node-server-app-vvg4.onrender.com";
 
   const fetchWelcome = async () => {
