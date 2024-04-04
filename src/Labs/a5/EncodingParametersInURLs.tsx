@@ -5,17 +5,23 @@ function EncodingParametersInURLs() {
   const [a, setA] = useState(34);
   const [b, setB] = useState(23);
   const [welcome, setWelcome] = useState("");
+  // const API_BASE = process.env.REACT_APP_API_BASE;
+  const API_BASE = "https://kanbas-node-server-app-vvg4.onrender.com";
+
   const fetchWelcome = async () => {
-    const response = await axios.get("http://localhost:4000/a5/welcome");
+    // const response = await axios.get("http://localhost:4000/a5/welcome");
+    const response = await axios.get(`${API_BASE}/a5/welcome`);
     setWelcome(response.data);
   }
   const [result, setResult] = useState(0);
   const fetchSum = async (a: number, b: number) => {
-    const response = await axios.get(`http://localhost:4000/a5/add/${a}/${b}`);
+    // const response = await axios.get(`http://localhost:4000/a5/add/${a}/${b}`);
+    const response = await axios.get(`${API_BASE}/a5/add/${a}/${b}`);
     setResult(response.data);
   }
   const fetchSubtraction = async (a: number, b: number) => {
-    const response = await axios.get(`http://localhost:4000/a5/subtract/${a}/${b}`);
+    // const response = await axios.get(`http://localhost:4000/a5/subtract/${a}/${b}`);
+    const response = await axios.get(`${API_BASE}/a5/subtract/${a}/${b}`);
     setResult(response.data);
   }
 
@@ -37,27 +43,27 @@ function EncodingParametersInURLs() {
         Fetch Sum of {a} + {b}
       </button>
       <button className="btn btn-danger me-3 mt-3" onClick={() => fetchSubtraction(a, b)} >
-        Fetch Sum of {a} - {b}
+        Fetch Difference of {a} - {b}
       </button>
 
       <h3 className="mt-3">Path Parameters</h3>
       <div className="mt-3">
-        <a href={`http://localhost:4000/a5/add/${a}/${b}`}>
+        <a href={`${API_BASE}/a5/add/${a}/${b}`}>
           <button className="btn btn-primary me-3">
             Add {a} + {b}
           </button>
         </a>
-        <a href={`http://localhost:4000/a5/subtract/${a}/${b}`}>
+        <a href={`${API_BASE}/a5/subtract/${a}/${b}`}>
           <button className="btn btn-danger me-3">
             Substract {a} - {b}
           </button>
         </a>
-        <a href={`http://localhost:4000/a5/multiply/${a}/${b}`}>
+        <a href={`${API_BASE}/a5/multiply/${a}/${b}`}>
           <button className="btn btn-success me-3">
             Mulitply {a} * {b}
           </button>
         </a>
-        <a href={`http://localhost:4000/a5/divide/${a}/${b}`}>
+        <a href={`${API_BASE}/a5/divide/${a}/${b}`}>
           <button className="btn btn-warning me-3">
             Divide {a} / {b}
           </button>
@@ -67,19 +73,19 @@ function EncodingParametersInURLs() {
       <h3>Query Parameters</h3>
       <div className="mb-5">
         <a className="btn btn-primary me-3"
-          href={`http://localhost:4000/a5/calculator?operation=add&a=${a}&b=${b}`}>
+          href={`${API_BASE}/a5/calculator?operation=add&a=${a}&b=${b}`}>
           Add {a} + {b}
         </a>
         <a className="btn btn-danger me-3"
-          href={`http://localhost:4000/a5/calculator?operation=subtract&a=${a}&b=${b}`}>
+          href={`${API_BASE}/a5/calculator?operation=subtract&a=${a}&b=${b}`}>
           Substract {a} - {b}
         </a>
         <a className="btn btn-success me-3"
-          href={`http://localhost:4000/a5/calculator?operation=multiply&a=${a}&b=${b}`}>
+          href={`${API_BASE}/a5/calculator?operation=multiply&a=${a}&b=${b}`}>
           Multiply {a} * {b}
         </a>
         <a className="btn btn-warning me-3"
-          href={`http://localhost:4000/a5/calculator?operation=divide&a=${a}&b=${b}`}>
+          href={`${API_BASE}/a5/calculator?operation=divide&a=${a}&b=${b}`}>
           Divide {a} / {b}
         </a>
       </div>

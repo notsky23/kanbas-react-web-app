@@ -2,19 +2,23 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 function WorkingWithObjects() {
+  const API_BASE = "https://kanbas-node-server-app-vvg4.onrender.com";
+  
   const [assignment, setAssignment] = useState({
     id: 1, title: "NodeJS Assignment",
     description: "Create a NodeJS server with ExpressJS",
     due: "2021-10-10", completed: false, score: 0,
   });
-  const ASSIGNMENT_URL = "http://localhost:4000/a5/assignment"
+  // const ASSIGNMENT_URL = "http://localhost:4000/a5/assignment"
+  const ASSIGNMENT_URL = `${API_BASE}/a5/assignment`
 
   const [modules, setModules] = useState({
     id: 1, name: "New Module",
     description: "This is a new module",
     course: "Web Development",
   });
-  const MODULE_URL = "http://localhost:4000/a5/module"
+  // const MODULE_URL = "http://localhost:4000/a5/module"
+  const MODULE_URL = `${API_BASE}/a5/module`
 
   const [fetchedAssignment, setFetchedAssignment] = useState({});
   const fetchAssignment = async () => {
@@ -34,26 +38,33 @@ function WorkingWithObjects() {
     <div>
       <h3>Working With Objects</h3>
       <h4>Retrieving Objects</h4>
-      <a className="btn btn-primary col-12 me-3 mb-3" href="http://localhost:4000/a5/assignment">
+      {/* <a className="btn btn-primary col-12 me-3 mb-3" href="http://localhost:4000/a5/assignment"> */}
+      <a className="btn btn-primary col-12 me-3 mb-3" href={ASSIGNMENT_URL} >
         Get Assignment
       </a>
       <div className="d-flex justify-content-between mb-3">
-        <a className="btn btn-success me-3" href="http://localhost:4000/a5/assignment/id">
+        {/* <a className="btn btn-success me-3" href="http://localhost:4000/a5/assignment/id"> */}
+        <a className="btn btn-success me-3" href={`${ASSIGNMENT_URL}/id`} >
           Get ID
         </a>
-        <a className="btn btn-warning me-3" href="http://localhost:4000/a5/assignment/title">
+        {/* <a className="btn btn-warning me-3" href="http://localhost:4000/a5/assignment/title"> */}
+        <a className="btn btn-warning me-3" href={`${ASSIGNMENT_URL}/title`} >
           Get Title
         </a>
-        <a className="btn btn-danger me-3" href="http://localhost:4000/a5/assignment/description">
+        {/* <a className="btn btn-danger me-3" href="http://localhost:4000/a5/assignment/description"> */}
+        <a className="btn btn-danger me-3" href={`${ASSIGNMENT_URL}/description`} >
           Get Description
         </a>
-        <a className="btn btn-secondary me-3" href="http://localhost:4000/a5/assignment/due">
+        {/* <a className="btn btn-secondary me-3" href="http://localhost:4000/a5/assignment/due"> */}
+        <a className="btn btn-secondary me-3" href={`${ASSIGNMENT_URL}/due`} >
           Get Due Date
         </a>
-        <a className="btn btn-info me-3" href="http://localhost:4000/a5/assignment/completed">
+        {/* <a className="btn btn-info me-3" href="http://localhost:4000/a5/assignment/completed"> */}
+        <a className="btn btn-info me-3" href={`${ASSIGNMENT_URL}/completed`} >
           Get Completed
         </a>
-        <a className="btn btn-dark me-3" href="http://localhost:4000/a5/assignment/score">
+        {/* <a className="btn btn-dark me-3" href="http://localhost:4000/a5/assignment/score"> */}
+        <a className="btn btn-dark me-3" href={`${ASSIGNMENT_URL}/score`} >
           Get Score
         </a>
       </div>
@@ -131,20 +142,25 @@ function WorkingWithObjects() {
       <br />
 
       <h4>Modules Object</h4>
-      <a className="btn btn-primary col-12 me-3 mb-3" href="http://localhost:4000/a5/module">
+      {/* <a className="btn btn-primary col-12 me-3 mb-3" href="http://localhost:4000/a5/module"> */}
+      <a className="btn btn-primary col-12 me-3 mb-3" href={`${MODULE_URL}`} >
         Get Module
       </a>
       <div className="d-flex justify-content-between mb-3">
-        <a className="btn btn-success me-3" href="http://localhost:4000/a5/module/id">
+        {/* <a className="btn btn-success me-3" href="http://localhost:4000/a5/module/id"> */}
+        <a className="btn btn-success me-3" href={`${MODULE_URL}/id`} >
           Get ID
         </a>
-        <a className="btn btn-warning me-3" href="http://localhost:4000/a5/module/name">
+        {/* <a className="btn btn-warning me-3" href="http://localhost:4000/a5/module/name"> */}
+        <a className="btn btn-warning me-3" href={`${MODULE_URL}/name`}>
           Get Name
         </a>
-        <a className="btn btn-danger me-3" href="http://localhost:4000/a5/module/description">
+        {/* <a className="btn btn-danger me-3" href="http://localhost:4000/a5/module/description"> */}
+        <a className="btn btn-danger me-3" href={`${MODULE_URL}/description`} >
           Get Description
         </a>
-        <a className="btn btn-secondary me-3" href="http://localhost:4000/a5/module/course">
+        {/* <a className="btn btn-secondary me-3" href="http://localhost:4000/a5/module/course"> */}
+        <a className="btn btn-secondary me-3" href={`${MODULE_URL}/course`} >
           Get Course
         </a>
       </div>
