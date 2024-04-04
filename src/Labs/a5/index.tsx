@@ -4,8 +4,8 @@ import WorkingWithArrays from "./WorkingWithArrays";
 import WorkingWithObjects from "./WorkingWithObjects";
 
 function Assignment5() {
-  const API_BASE = "https://kanbas-node-server-app-vvg4.onrender.com";
-  // const API_BASE = process.env.REACT_APP_API_BASE;
+  // const API_BASE = "https://kanbas-node-server-app-vvg4.onrender.com";
+  const API_BASE = process.env.REACT_APP_API_BASE;
   const WELCOME_API = `${API_BASE}/a5/welcome`;
 
     return (
