@@ -75,7 +75,7 @@ function Dashboard(
                         style={{ textDecoration: "none", color: "navy", fontWeight: "bold" }}>
                         {course.number} {course.name}
                         <span className="card-text">
-                            {course.number}.{course.section}.{course.startDate.replace(/-/g, '').slice(0, 6)}
+                            {course.number}.{course.section}.{ course.startDate ? course.startDate.replace(/-/g, '').slice(0, 6) : ''}
                         </span>
                         <p className="card-subtext">
                             {/* {course.startDate.replace(/-/g, '').slice(0, 6)}&nbsp;
