@@ -9,33 +9,16 @@ import {
   deleteModule,
   updateModule,
   setModule,
+  setModules
 } from "./reducer"
 import { KanbasState } from "../../store";
-
-interface Lesson {
-  _id: string;
-  name: string;
-}
-
-interface Module {
-  _id: string;
-  course: string;
-  name: string;
-  description: string;
-  lessons?: Lesson[];
-}
+// import { findModulesForCourse, createModule } from "./client";
+import * as client from "./client";
+import { Lesson } from "./moduleTypes";
 
 function ModuleList() {
   const { courseId } = useParams();
   const [selectedModuleId, setSelectedModuleId] = useState<string | null>(null);
-
-  // Set the initial selected module to the first module of the course
-  useEffect(() => {
-    const firstModule = moduleList.find((module) => module.course === courseId);
-    if (firstModule) {
-      setSelectedModuleId(firstModule._id);
-    }
-  }, [courseId]);
 
   // Handler to toggle the selected module
   const handleSelectModule = (moduleId: string) => {
@@ -43,19 +26,59 @@ function ModuleList() {
     setSelectedModuleId(selectedModuleId === moduleId ? null : moduleId);
   };
 
-  const moduleList = useSelector((state: KanbasState) => 
-    state.modulesReducer.modules);
-  const module = useSelector((state: KanbasState) => 
-    state.modulesReducer.module);
+  const moduleList = useSelector((state: KanbasState) => state.modulesReducer.modules);
+  const module = useSelector((state: KanbasState) => state.modulesReducer.module);
   const dispatch = useDispatch();
+
+  // Define the function to handle adding a module
+  const handleAddModule = () => {
+    if(courseId && module) {
+      client.createModule(courseId, module).then((newModule) => {
+        dispatch(addModule(newModule));
+      }).catch(error => console.error('Failed to create module:', error));
+    }
+  };
+
+  // Define the function to handle reading/retrieving a module
+  useEffect(() => {
+    if (courseId) {
+      client.findModulesForCourse(courseId).then((modules) => {
+        dispatch(setModules(modules))
+
+        // Select the first module if modules array is not empty
+        if (modules.length > 0) {
+          setSelectedModuleId(modules[0]._id);
+        }
+      });
+    }
+  }, [courseId]);
+
+  // Define the function to handle updating a module
+  const handleUpdateModule = async () => {
+    const status = await client.updateModule(module);
+    dispatch(updateModule(module));
+  };
+
+  // Define the function to handle deleting a module
+  const handleDeleteModule = (moduleId: string) => {
+    client.deleteModule(moduleId).then((status) => {
+      dispatch(deleteModule(moduleId));
+    });
+  };
+
+  const [isEditMode, setIsEditMode] = useState(false);
+  const handleEditClick = (moduleId: string) => {
+    setIsEditMode(true);
+    setSelectedModuleId(moduleId);
+  };
 
   return (
     <>
       <ul className="list-group wd-modules">
-        {/* <button className="btn btn-success" onClick={() => addModule()}>+ Add</button> */}
-        <button className="btn btn-success" onClick={() => dispatch(addModule({ ...module, course: courseId, lessons: [] }))}>+ Add</button>
-        {/* <button className="btn btn-primary" onClick={ updateModule }>Update</button> */}
-        <button className="btn btn-primary" onClick={() => dispatch(updateModule(module)) }>Update</button>
+        {/* <button className="btn btn-success" onClick={() => dispatch(addModule({ ...module, course: courseId, lessons: [] }))}>+ Add</button> */}
+        <button className="btn btn-success" onClick={ handleAddModule }>+ Add</button>
+        {/* <button className="btn btn-primary" onClick={() => dispatch(updateModule(module)) }>Update</button> */}
+        <button className="btn btn-primary" onClick={ handleUpdateModule } disabled={!isEditMode}>Update</button>
         <li className="list-group-item">
           <div className="d-flex align-items-center">
             <FaEllipsisV className="me-2" />
@@ -95,10 +118,15 @@ function ModuleList() {
                   <button className="btn btn-warning px-2 me-1" onClick={(e) => {
                     e.stopPropagation();
                     dispatch(setModule(module))
+                    handleEditClick(module._id)
                   }}>
                     Edit
                   </button>
-                  <button className="btn btn-danger px-2 me-3" onClick={() => dispatch(deleteModule(module._id))}>
+                  {/* <button className="btn btn-danger px-2 me-3" onClick={() => dispatch(deleteModule(module._id))}> */}
+                  <button className="btn btn-danger px-2 me-3" onClick={(e) => {
+                    e.stopPropagation();
+                    handleDeleteModule(module._id)}
+                  }>
                     Delete
                   </button>
                   <FaCheckCircle className="text-success" />

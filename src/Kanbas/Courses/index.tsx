@@ -1,5 +1,5 @@
 import React, { useState, useEffect, CSSProperties } from 'react';
-import { courses } from "../../Kanbas/Database";
+// import { courses } from "../../Kanbas/Database";
 import { Navigate, Route, Routes, useParams, Link, useLocation } from "react-router-dom";
 import { HiMiniBars3 } from "react-icons/hi2";
 import CourseNavigation from "./Navigation";
@@ -48,15 +48,6 @@ function Courses({ courses, setLastVisitedCourseId }: { courses: Course[]; setLa
 
         return () => window.removeEventListener('resize', handleResize);
     }, [courseId, setLastVisitedCourseId]);
-
-    const mainContentStyle: CSSProperties = {
-        top: "100px",
-        left: isNavVisible ? "320px" : "10px",
-        right: isNavVisible ? "0" : "0",
-        position: "absolute",
-        overflowY: "scroll",
-        bottom: "0",
-    };
 
     // Helper function to map path to readable name
     const mapPathToName = (path: string): string => {
