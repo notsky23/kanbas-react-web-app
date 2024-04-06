@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./index.css";
-import { modules as initialModules } from "../../Database";
+// import { modules as initialModules } from "../../Database";
 import { FaEllipsisV, FaCheckCircle, FaPlusCircle } from "react-icons/fa";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
@@ -31,9 +31,9 @@ function ModuleList() {
   const dispatch = useDispatch();
 
   // Define the function to handle adding a module
-  const handleAddModule = () => {
+  const handleAddModule = async () => {
     if(courseId && module) {
-      client.createModule(courseId, module).then((newModule) => {
+      const newModule = await client.createModule(courseId, module).then((newModule) => {
         dispatch(addModule(newModule));
       }).catch(error => console.error('Failed to create module:', error));
     }
@@ -55,13 +55,13 @@ function ModuleList() {
 
   // Define the function to handle updating a module
   const handleUpdateModule = async () => {
-    const status = await client.updateModule(module);
+    const status = await client.updateModule(courseId, module);
     dispatch(updateModule(module));
   };
 
   // Define the function to handle deleting a module
-  const handleDeleteModule = (moduleId: string) => {
-    client.deleteModule(moduleId).then((status) => {
+  const handleDeleteModule = async (moduleId: string) => {
+    await client.deleteModule(courseId, moduleId).then((status) => {
       dispatch(deleteModule(moduleId));
     });
   };
