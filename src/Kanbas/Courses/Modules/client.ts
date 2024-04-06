@@ -18,14 +18,13 @@ export const findModulesForCourse = async (courseId: any) => {
 };
 
 // Update
-export const updateModule = async (courseId: any, module: any) => {
-    const response = await axios.put(`${COURSES_API}/${courseId}/modules/${module._id}`, module);
+export const updateModule = async (module: any) => {
+    const response = await axios.put(`${MODULES_API}/${module._id}`, module);
     return response.data;
 };  
 
 // Delete
-export const deleteModule = async (courseId: any, moduleId: any) => {
-    const response = await axios.delete(`${COURSES_API}/${courseId}/modules/${moduleId}`);
+export const deleteModule = async (moduleId: string) => {
+    const response = await axios.delete(`${MODULES_API}/${moduleId}`);
     return response.data;
 };
-  

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import "./index.css";
-// import { modules as initialModules } from "../../Database";
 import { FaEllipsisV, FaCheckCircle, FaPlusCircle } from "react-icons/fa";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
@@ -31,9 +30,9 @@ function ModuleList() {
   const dispatch = useDispatch();
 
   // Define the function to handle adding a module
-  const handleAddModule = async () => {
+  const handleAddModule = () => {
     if(courseId && module) {
-      const newModule = await client.createModule(courseId, module).then((newModule) => {
+      client.createModule(courseId, module).then((newModule) => {
         dispatch(addModule(newModule));
       }).catch(error => console.error('Failed to create module:', error));
     }
@@ -55,21 +54,27 @@ function ModuleList() {
 
   // Define the function to handle updating a module
   const handleUpdateModule = async () => {
-    const status = await client.updateModule(courseId, module);
+    const status = await client.updateModule(module);
     dispatch(updateModule(module));
   };
 
   // Define the function to handle deleting a module
-  const handleDeleteModule = async (moduleId: string) => {
-    await client.deleteModule(courseId, moduleId).then((status) => {
+  const handleDeleteModule = (moduleId: string) => {
+    client.deleteModule(moduleId).then((status) => {
       dispatch(deleteModule(moduleId));
+    }). catch((error) => {
+      console.error('Failed to delete module:', error);
     });
   };
 
   const [isEditMode, setIsEditMode] = useState(false);
   const handleEditClick = (moduleId: string) => {
-    setIsEditMode(true);
-    setSelectedModuleId(moduleId);
+    const selectedModule = moduleList.find((mod) => mod._id === moduleId);
+    if (selectedModule) {
+      dispatch(setModule(selectedModule));
+      setIsEditMode(true);
+      setSelectedModuleId(moduleId);
+    }
   };
 
   return (
@@ -117,7 +122,6 @@ function ModuleList() {
                 <div className="text-nowrap">
                   <button className="btn btn-warning px-2 me-1" onClick={(e) => {
                     e.stopPropagation();
-                    dispatch(setModule(module))
                     handleEditClick(module._id)
                   }}>
                     Edit

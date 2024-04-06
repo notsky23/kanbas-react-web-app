@@ -4,7 +4,8 @@ import { Module, ModulesState } from "./moduleTypes";
 
 const initialState: ModulesState = {
     modules: [],
-    module: { _id: '', name: "New Module", description: "New Description", course: "New Course" },
+    module: { _id: '', name: "New Module", description: "New Description", course: "New Course",
+        lessons: [{_id: "", name: "", description: "", module: "" }] },
 };
 
 const modulesSlice = createSlice({
@@ -17,7 +18,7 @@ const modulesSlice = createSlice({
     addModule: (state, action) => {
         state.modules = [
             ...state.modules,
-            { ...action.payload, _id: new Date().getTime().toString() },
+            { ...action.payload },
         ];
     },
     deleteModule: (state, action) => {
@@ -39,7 +40,7 @@ const modulesSlice = createSlice({
         if (action.payload._id) {
             state.module = { ...state.module, ...action.payload };
         } else {
-            state.module = { ...state.module, ...action.payload, lessons: [] };
+            state.module = { ...state.module, ...action.payload };
         }
     },
   },
