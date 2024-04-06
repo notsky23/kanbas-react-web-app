@@ -3,20 +3,26 @@ import { useNavigate, useParams, Link } from "react-router-dom";
 // import { assignments } from "../../../Database";
 import { FaCheckCircle, FaEllipsisV, FaPlus } from "react-icons/fa";
 import { useSelector, useDispatch } from "react-redux";
+// import {
+//     addAssignment,
+//     updateAssignment,
+//     selectAssignment,
+// } from "../reducer"
 import {
-    addAssignment,
+    createAssignment,
     updateAssignment,
-    selectAssignment,
-  } from "../reducer"
+    findAssignmentsForCourse,
+    getAssignmentById
+} from "../client";
 import { KanbasState } from "../../../store";
 
 function AssignmentEditor() {
     const { courseId, assignmentId } = useParams();
     const navigate = useNavigate();
-    const dispatch = useDispatch();
+    // const dispatch = useDispatch();
 
     // Retrieve the list of assignments and the current assignment from Redux state
-    const assignmentsList = useSelector((state: KanbasState) => state.assignmentsReducer.assignments);
+    // const assignmentsList = useSelector((state: KanbasState) => state.assignmentsReducer.assignments);
     const [assignment, setAssignment] = useState({
         title: 'New Title',
         description: 'New Description',
@@ -26,35 +32,37 @@ function AssignmentEditor() {
         availableUntilDate: '',
     });
 
-    // const handleSave = () => {
-    //     console.log("Actually saving assignment TBD in later assignments");
-    //     navigate(`/Kanbas/Courses/${courseId}/Assignments`);
-    // };
-
-    // const [points, setPoints] = useState(assignment?.points || 100);
-    // const handlePointsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    //     setPoints(parseInt(e.target.value, 10 || 0));
-    // };
-
-    // Load existing assignment for editing
     useEffect(() => {
-        if (assignmentId) {
-            const existingAssignment = assignmentsList.find(a => a._id === assignmentId);
-            if (existingAssignment) {
-                setAssignment(existingAssignment);
-            }
-        } else {
-            // Reset to default values when creating a new assignment
-            setAssignment({
-                title: '',
-                description: '',
-                points: 100,
-                dueDate: '',
-                availableFromDate: '',
-                availableUntilDate: '',
+        // Only fetch the assignment if it's not the 'New' assignment route
+        if (assignmentId && assignmentId !== 'New' && courseId) {
+            getAssignmentById(courseId, assignmentId).then(fetchedAssignment => {
+                setAssignment(fetchedAssignment);
+            }).catch(error => {
+                console.error('Error fetching assignment:', error);
+                // Handle the error, e.g., by showing an error message or redirecting
             });
         }
-    }, [assignmentId, assignmentsList]);
+    }, [assignmentId, courseId]);
+
+    // // Load existing assignment for editing
+    // useEffect(() => {
+    //     if (assignmentId) {
+    //         const existingAssignment = assignmentsList.find(a => a._id === assignmentId);
+    //         if (existingAssignment) {
+    //             setAssignment(existingAssignment);
+    //         }
+    //     } else {
+    //         // Reset to default values when creating a new assignment
+    //         setAssignment({
+    //             title: '',
+    //             description: '',
+    //             points: 100,
+    //             dueDate: '',
+    //             availableFromDate: '',
+    //             availableUntilDate: '',
+    //         });
+    //     }
+    // }, [assignmentId, assignmentsList]);
 
     // Handle form field changes
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -66,23 +74,43 @@ function AssignmentEditor() {
     };
 
     // Save the assignment
-    const handleSave = () => {
-        if (assignmentId === 'New') {
-            // Create new assignment
-            // Generate a new unique ID for the assignment or let the reducer handle it
-            dispatch(addAssignment({
-                ...assignment,
-                course: courseId, // Ensure the course ID is included
-                _id: new Date().getTime().toString(), // Example of generating a unique ID
-            }));
-        } else {
-            // Update existing assignment
-            dispatch(updateAssignment({
-                ...assignment,
-                _id: assignmentId, // Ensure the correct ID is passed for the update
-            }));
+    // const handleSave = () => {
+    //     if (assignmentId === 'New') {
+    //         // Create new assignment
+    //         // Generate a new unique ID for the assignment or let the reducer handle it
+    //         dispatch(addAssignment({
+    //             ...assignment,
+    //             course: courseId, // Ensure the course ID is included
+    //             _id: new Date().getTime().toString(), // Example of generating a unique ID
+    //         }));
+    //     } else {
+    //         // Update existing assignment
+    //         dispatch(updateAssignment({
+    //             ...assignment,
+    //             _id: assignmentId, // Ensure the correct ID is passed for the update
+    //         }));
+    //     }
+    //     navigate(`/Kanbas/Courses/${courseId}/Assignments`);
+    // };
+
+    const handleSave = async () => {
+        if (!courseId) {
+            console.error('Course ID is undefined.');
+            navigate(`/Kanbas/Courses/${courseId}/Assignments`);
+            return;
         }
-        navigate(`/Kanbas/Courses/${courseId}/Assignments`);
+
+        try{
+            if (assignmentId === 'New') {
+                await createAssignment(courseId, assignment);
+            } else {
+                await updateAssignment({_id: assignmentId, ...assignment});
+            }
+            navigate(`/Kanbas/Courses/${courseId}/Assignments`);
+        } catch (error) {
+            console.error('Failed to save the assignment:', error);
+        }
+        
     };
 
     return (

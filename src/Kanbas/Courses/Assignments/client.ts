@@ -10,8 +10,14 @@ export const createAssignment = async (courseId: string, assignment: any) => {
 };
 
 // Read/Retrieve
+// Get all assignments
 export const findAssignmentsForCourse = async (courseId: string) => {
     const response = await axios.get(`${COURSES_API}/${courseId}/assignments`);
+    return response.data;
+};
+// Get a single assignment
+export const getAssignmentById = async (courseId: string, assignmentId: string) => {
+    const response = await axios.get(`${COURSES_API}/${courseId}/assignments/${assignmentId}`);
     return response.data;
 };
 
