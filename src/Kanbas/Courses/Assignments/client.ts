@@ -1,7 +1,9 @@
 import axios from "axios";
 
-const ASSIGNMENTS_API = "http://localhost:4000/api/assignments";
-const COURSES_API = "http://localhost:4000/api/courses";
+// const COURSES_API = "http://localhost:4000/api/courses";
+const COURSES_API = "https://kanbas-node-server-app-vvg4.onrender.com/api/courses";
+// const ASSIGNMENTS_API = "http://localhost:4000/api/assignments";
+const ASSIGNMENTS_API = "https://kanbas-node-server-app-vvg4.onrender.com/api/assignments";
 
 // Create
 export const createAssignment = async (courseId: string, assignment: any) => {
