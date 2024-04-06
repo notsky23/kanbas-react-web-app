@@ -65,6 +65,7 @@ function ModuleList() {
     }). catch((error) => {
       console.error('Failed to delete module:', error);
     });
+    setIsEditMode(false);
   };
 
   const [isEditMode, setIsEditMode] = useState(false);

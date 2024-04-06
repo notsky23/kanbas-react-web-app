@@ -16,10 +16,7 @@ const modulesSlice = createSlice({
         state.modules = action.payload;
     },
     addModule: (state, action) => {
-        state.modules = [
-            ...state.modules,
-            { ...action.payload },
-        ];
+        state.modules.push(action.payload);
     },
     deleteModule: (state, action) => {
         state.modules = state.modules.filter(
@@ -37,11 +34,7 @@ const modulesSlice = createSlice({
     },
     setModule: (state, action) => {
         // Check if action.payload has an _id to determine if it's an existing module
-        if (action.payload._id) {
-            state.module = { ...state.module, ...action.payload };
-        } else {
-            state.module = { ...state.module, ...action.payload };
-        }
+        state.module = { ...state.module, ...action.payload };
     },
   },
 });
