@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
-import "./index.css";
-import { FaEllipsisV, FaCheckCircle, FaPlusCircle } from "react-icons/fa";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
+import "./index.css";
 import {
   addModule,
   deleteModule,
@@ -10,28 +9,30 @@ import {
   setModule,
   setModules
 } from "./reducer"
+import { FaEllipsisV, FaCheckCircle, FaPlusCircle } from "react-icons/fa";
 import { KanbasState } from "../../store";
 // import { findModulesForCourse, createModule } from "./client";
-import * as client from "./client";
 import { Lesson } from "./moduleTypes";
+import * as client from "./client";
 
 function ModuleList() {
   const { courseId } = useParams();
   const [selectedModuleId, setSelectedModuleId] = useState<string | null>(null);
-
-  // Handler to toggle the selected module
-  const handleSelectModule = (moduleId: string) => {
-    // Toggle module selection: if it's already selected, deselect it, otherwise select it
-    setSelectedModuleId(selectedModuleId === moduleId ? null : moduleId);
-  };
-
+  const [isEditMode, setIsEditMode] = useState(false);
   const moduleList = useSelector((state: KanbasState) => state.modulesReducer.modules);
   const module = useSelector((state: KanbasState) => state.modulesReducer.module);
   const dispatch = useDispatch();
 
+  // Handler to toggle the selected module
+  const handleSelectModule = (moduleId: string) => {
+    // Toggle module selection: if it's already selected, deselect it, otherwise select it
+    console.log("Current module ID:", moduleId);
+    setSelectedModuleId(prevModuleId => prevModuleId === moduleId ? null : moduleId);
+  };
+  
   // Define the function to handle adding a module
   const handleAddModule = () => {
-    if(courseId && module) {
+    if(module) {
       client.createModule(courseId, module).then((newModule) => {
         dispatch(addModule(newModule));
       }).catch(error => console.error('Failed to create module:', error));
@@ -40,36 +41,42 @@ function ModuleList() {
 
   // Define the function to handle reading/retrieving a module
   useEffect(() => {
-    if (courseId) {
-      client.findModulesForCourse(courseId).then((modules) => {
-        dispatch(setModules(modules))
+    let isMounted = true;
 
-        // Select the first module if modules array is not empty
+    client.findModulesForCourse(courseId).then((modules) => {
+      // Select the first module if modules array is not empty
+      if (isMounted) {
+        dispatch(setModules(modules));
         if (modules.length > 0) {
           setSelectedModuleId(modules[0]._id);
         }
-      });
-    }
-  }, [courseId]);
+      }
+    });
+
+    return () => {
+      isMounted = false;
+    };
+  }, [courseId, dispatch]);
 
   // Define the function to handle updating a module
   const handleUpdateModule = async () => {
-    const status = await client.updateModule(module);
-    dispatch(updateModule(module));
+    const updatedModule = await client.updateModule(module);
+    dispatch(updateModule(updatedModule));
   };
 
   // Define the function to handle deleting a module
-  const handleDeleteModule = (moduleId: string) => {
-    client.deleteModule(moduleId).then((status) => {
+  const handleDeleteModule = (moduleId: string, event: React.MouseEvent) => {
+    event.stopPropagation();
+    client.deleteModule(moduleId).then(() => {
       dispatch(deleteModule(moduleId));
+      setIsEditMode(false);
     }). catch((error) => {
       console.error('Failed to delete module:', error);
     });
-    setIsEditMode(false);
   };
 
-  const [isEditMode, setIsEditMode] = useState(false);
-  const handleEditClick = (moduleId: string) => {
+  const handleEditClick = (moduleId: string, event: React.MouseEvent) => {
+    event.stopPropagation();
     const selectedModule = moduleList.find((mod) => mod._id === moduleId);
     if (selectedModule) {
       dispatch(setModule(selectedModule));
@@ -81,9 +88,7 @@ function ModuleList() {
   return (
     <>
       <ul className="list-group wd-modules">
-        {/* <button className="btn btn-success" onClick={() => dispatch(addModule({ ...module, course: courseId, lessons: [] }))}>+ Add</button> */}
         <button className="btn btn-success" onClick={ handleAddModule }>+ Add</button>
-        {/* <button className="btn btn-primary" onClick={() => dispatch(updateModule(module)) }>Update</button> */}
         <button className="btn btn-primary" onClick={ handleUpdateModule } disabled={!isEditMode}>Update</button>
         <li className="list-group-item">
           <div className="d-flex align-items-center">
@@ -121,17 +126,11 @@ function ModuleList() {
                   {module.name}
                 </div>
                 <div className="text-nowrap">
-                  <button className="btn btn-warning px-2 me-1" onClick={(e) => {
-                    e.stopPropagation();
-                    handleEditClick(module._id)
-                  }}>
+                  <button className="btn btn-warning px-2 me-1" onClick={(e) => {handleEditClick(module._id, e)}}>
                     Edit
                   </button>
                   {/* <button className="btn btn-danger px-2 me-3" onClick={() => dispatch(deleteModule(module._id))}> */}
-                  <button className="btn btn-danger px-2 me-3" onClick={(e) => {
-                    e.stopPropagation();
-                    handleDeleteModule(module._id)}
-                  }>
+                  <button className="btn btn-danger px-2 me-3" onClick={(e) => {handleDeleteModule(module._id, e)}}>
                     Delete
                   </button>
                   <FaCheckCircle className="text-success" />

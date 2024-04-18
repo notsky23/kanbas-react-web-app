@@ -7,18 +7,6 @@ import { FaPlusCircle, FaMinusCircle, FaEdit } from "react-icons/fa";
 import { IoNavigateCircle } from "react-icons/io5";
 import { Course } from "../../Kanbas";
 
-// export interface Course {
-//   _id: string;
-//   name: string;
-//   number: string;
-//   section: string;
-//   startDate: string;
-//   endDate: string;
-//   semester: string;
-//   sem: string;
-//   image: string;
-// }
-
 function Dashboard(
   { courses, addOrEditCourse, updateCourse, editingCourse, setEditingCourse, deleteCourse, isModalOpen, setIsModalOpen } :
   {
@@ -33,26 +21,6 @@ function Dashboard(
   )
   
   {
-  // const [courses, setCourses] = useState(db.courses);
-
-  // useEffect(() => {
-  //   // Update localStorage whenever the courses list changes
-  //   localStorage.setItem('courses', JSON.stringify(courses));
-
-  //   // Function to clear localStorage on page refresh
-  //   const handleBeforeUnload = () => {
-  //     localStorage.removeItem('courses');
-  //   };
-
-  //   // Add event listener for beforeunload
-  //   window.addEventListener('beforeunload', handleBeforeUnload);
-
-  //   // Cleanup function to remove the event listener
-  //   return () => {
-  //     window.removeEventListener('beforeunload', handleBeforeUnload);
-  //   };
-  // }, [courses]);
-
   return (
     <div className="p-3 p-md-4">
       <div className="d-flex justify-content-between justify-content-xs-end align-items-center">

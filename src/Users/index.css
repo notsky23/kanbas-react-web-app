@@ -1,0 +1,32 @@
+.table-fixed-layout {
+    table-layout: auto;
+    width: 100%;
+}
+/* Custom CSS for hover effect */
+.icon-hover1:hover {
+    color: #28a745 !important;
+    cursor: pointer
+}
+.icon-hover2:hover {
+    color: #ff5c5c !important;
+    cursor: pointer
+}
+.icon-hover3:hover {
+    color: #d9e228 !important;
+    cursor: pointer
+}
+.table-responsive {
+    overflow-x: auto;
+    overflow-y: auto;
+    max-width: 100%;
+}
+.max-width-100 {
+    max-width: 100% !important;
+}
+
+/* Optional hiding of column if you don't want to use bootstrap */
+@media screen and (max-width: 768px) {
+    .hide-on-mobile {
+      display: none;
+    }
+}

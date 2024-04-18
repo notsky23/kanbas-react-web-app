@@ -20,7 +20,10 @@ function Courses({ courses, setLastVisitedCourseId }: { courses: Course[]; setLa
 
     // const course = courses.find((course) => course._id === courseId);
     const [course, setCourse] = useState<Course | null>(null);
-    const COURSES_API = "http://localhost:4000/api/courses";
+    const API_BASE = process.env.REACT_APP_API_BASE?.replace(/\/+$/, "");
+    // const COURSES_API = "http://localhost:4000/api/courses";
+    // const COURSES_API = "https://kanbas-node-server-app-vvg4.onrender.com/api/courses";
+    const COURSES_API = `${API_BASE}/api/courses`;
 
     useEffect(() => {
         const findCourseById = async () => {

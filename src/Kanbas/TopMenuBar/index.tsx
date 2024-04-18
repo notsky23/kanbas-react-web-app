@@ -6,7 +6,7 @@ import KanbasNavigation from "../Navigation";
 import CourseNavigation from "../Courses/Navigation";
 import "./index.css";
 
-function TopMenuBar({ courses }: { courses: Course[] }) {
+function TopMenuBar({ courses = [] }: { courses: Course[] }) {
     const location = useLocation();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const modalRef = useRef<HTMLDivElement | null>(null);
@@ -49,10 +49,39 @@ function TopMenuBar({ courses }: { courses: Course[] }) {
         // Default display text
         let displayText = "Kanbas";
 
-        if (pathSegments.length > 2) {
-            displayText = courseNumber + ">" + pathSegments[3];
-        } else {
-            displayText = pathSegments[1];
+        // Return default when there are no additional path segments
+        if (pathSegments.length === 0) {
+            return displayText;
+        }
+
+        const course = courses.find(course => location.pathname.includes(course._id));
+        const courseNumber = course ? course.number : "Unknown Course";
+
+        switch (pathSegments[1].toLowerCase()) {
+            case 'dashboard':
+                displayText = "Dashboard";
+                break;
+            case 'courses':
+                if (pathSegments.length > 1) {
+                    // displayText = `${courseNumber} > ${pathSegments[3] ? pathSegments[3] : ''}`;
+                    displayText = courseNumber + " > " + pathSegments[3];
+                } else {
+                    displayText = "Courses";
+                }
+                break;
+            case 'account':
+                if (pathSegments.length > 3) {
+                    displayText = "Account > " + pathSegments[2] + " > " + pathSegments[3];
+                } else if (pathSegments.length > 1) {
+                    displayText = "Account > " + pathSegments[2];
+                } else {
+                    displayText = "Account";
+                }
+                break;
+            default:
+                // displayText = pathSegments[1] ? pathSegments[1] : "Kanbas";
+                displayText = pathSegments[1];
+                break;
         }
 
         return displayText;

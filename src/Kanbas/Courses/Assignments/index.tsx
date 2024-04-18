@@ -27,14 +27,6 @@ function Assignments() {
         }
     }, [courseId]);
 
-  // Dialog box to confirm deletion
-    // const handleDelete = (assignmentId: string) => {
-    //     const isConfirmed = window.confirm("Are you sure you want to delete this assignment?");
-    //     if (isConfirmed) {
-    //         dispatch(deleteAssignment(assignmentId));
-    //     }
-    // };
-
     const handleDelete = async (assignmentId: any) => {
         const isConfirmed = window.confirm("Are you sure you want to delete this assignment?");
         if (isConfirmed) {
@@ -42,6 +34,7 @@ function Assignments() {
             setAssignments(prevAssignments => prevAssignments.filter(assignment => assignment._id !== assignmentId));
             // Optionally, update redux state if needed
             dispatch(deleteAssignmentRedux(assignmentId));
+            alert("Assignment deleted successfully.");
         }
     };
 
