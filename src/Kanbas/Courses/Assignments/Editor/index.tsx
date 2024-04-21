@@ -3,26 +3,25 @@ import { useNavigate, useParams, Link } from "react-router-dom";
 // import { assignments } from "../../../Database";
 import { FaCheckCircle, FaEllipsisV, FaPlus } from "react-icons/fa";
 import { useSelector, useDispatch } from "react-redux";
-// import {
-//     addAssignment,
-//     updateAssignment,
-//     selectAssignment,
-// } from "../reducer"
 import {
     createAssignment,
     updateAssignment,
     findAssignmentsForCourse,
-    getAssignmentById
+    findAssignmentById
 } from "../client";
 import { KanbasState } from "../../../store";
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useNotification } from "../../../NotificationContext";
 
 function AssignmentEditor() {
+    const formatDate = (dateString: string | undefined) => {
+        return dateString ? new Date(dateString).toISOString().split('T')[0] : '';
+    };
+
     const { courseId, assignmentId } = useParams();
     const navigate = useNavigate();
-    // const dispatch = useDispatch();
 
-    // Retrieve the list of assignments and the current assignment from Redux state
-    // const assignmentsList = useSelector((state: KanbasState) => state.assignmentsReducer.assignments);
     const [assignment, setAssignment] = useState({
         title: 'New Title',
         description: 'New Description',
@@ -33,36 +32,19 @@ function AssignmentEditor() {
     });
 
     useEffect(() => {
-        // Only fetch the assignment if it's not the 'New' assignment route
-        if (assignmentId && assignmentId !== 'New' && courseId) {
-            getAssignmentById(courseId, assignmentId).then(fetchedAssignment => {
-                setAssignment(fetchedAssignment);
-            }).catch(error => {
-                console.error('Error fetching assignment:', error);
-                // Handle the error, e.g., by showing an error message or redirecting
-            });
+        if (courseId && assignmentId && assignmentId !== 'New') {
+            findAssignmentById(courseId, assignmentId)
+                .then(fetchedAssignment => {
+                    setAssignment({
+                        ...fetchedAssignment,
+                        dueDate: formatDate(fetchedAssignment.dueDate),
+                        availableFromDate: formatDate(fetchedAssignment.availableFromDate),
+                        availableUntilDate: formatDate(fetchedAssignment.availableUntilDate),
+                    });
+                })
+                .catch(console.error);
         }
     }, [assignmentId, courseId]);
-
-    // // Load existing assignment for editing
-    // useEffect(() => {
-    //     if (assignmentId) {
-    //         const existingAssignment = assignmentsList.find(a => a._id === assignmentId);
-    //         if (existingAssignment) {
-    //             setAssignment(existingAssignment);
-    //         }
-    //     } else {
-    //         // Reset to default values when creating a new assignment
-    //         setAssignment({
-    //             title: '',
-    //             description: '',
-    //             points: 100,
-    //             dueDate: '',
-    //             availableFromDate: '',
-    //             availableUntilDate: '',
-    //         });
-    //     }
-    // }, [assignmentId, assignmentsList]);
 
     // Handle form field changes
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -73,48 +55,51 @@ function AssignmentEditor() {
         }));
     };
 
-    // Save the assignment
-    // const handleSave = () => {
-    //     if (assignmentId === 'New') {
-    //         // Create new assignment
-    //         // Generate a new unique ID for the assignment or let the reducer handle it
-    //         dispatch(addAssignment({
-    //             ...assignment,
-    //             course: courseId, // Ensure the course ID is included
-    //             _id: new Date().getTime().toString(), // Example of generating a unique ID
-    //         }));
-    //     } else {
-    //         // Update existing assignment
-    //         dispatch(updateAssignment({
-    //             ...assignment,
-    //             _id: assignmentId, // Ensure the correct ID is passed for the update
-    //         }));
-    //     }
-    //     navigate(`/Kanbas/Courses/${courseId}/Assignments`);
-    // };
-
     const handleSave = async () => {
         if (!courseId) {
             console.error('Course ID is undefined.');
-            navigate(`/Kanbas/Courses/${courseId}/Assignments`);
             return;
         }
-
-        try{
+    
+        try {
+            let result;
             if (assignmentId === 'New') {
-                await createAssignment(courseId, assignment);
+                result = await createAssignment(courseId, assignment);
             } else {
-                await updateAssignment({_id: assignmentId, ...assignment});
+                result = await updateAssignment({_id: assignmentId, ...assignment});
             }
-            navigate(`/Kanbas/Courses/${courseId}/Assignments`);
+    
+            if (notifyChange) {
+                // Display toast and navigate after a short delay
+                toast('Update successful.', { 
+                    type: 'success',
+                    autoClose: 2000 
+                });
+                setTimeout(() => {
+                    navigate(`/Kanbas/Courses/${courseId}/Assignments`);
+                }, 2100); // Slightly longer than autoClose to ensure the user sees the message
+            } else {
+                // Navigate immediately and then show the toast
+                navigate(`/Kanbas/Courses/${courseId}/Assignments`);
+                setTimeout(() => {
+                    toast('Assignment saved successfully.', { type: 'success' });
+                }, 500); // Short delay to ensure navigation has occurred
+            }
         } catch (error) {
             console.error('Failed to save the assignment:', error);
+            toast('Failed to save assignment.', { type: 'error' });
         }
-        
+    };
+
+    // State for displaying a toast notification
+    const [notifyChange, setNotifyChange] = useState(true);
+    const handleNotifyChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setNotifyChange(e.target.checked);
     };
 
     return (
         <div className="flex-grow-1 pe-2 pe-md-3">
+            <ToastContainer />
             <div className="d-flex justify-content-end">
                 <button className="btn btn-light text-success" style={{ height: "2em" }}><FaCheckCircle /> Published</button>
                 <button className="btn btn-light border rounded" style={{ height: "2em", border: "1px solid dimgray" }}><FaEllipsisV /> </button>
@@ -156,43 +141,6 @@ function AssignmentEditor() {
                     </div>
                 </div>
 
-                {/* <div className="row my-4"> 
-                    <div className="col col-3 d-flex justify-content-end align-items-center">
-                        <label htmlFor="assignmentGroup">Assignment Group</label>
-                    </div>
-                    <div className="col col-7">
-                        <select id="assignmentGroup" className="form-control">
-                            <option>ASSIGNMENT</option>
-                            <option>QUIZ</option>
-                            <option>EXAM</option>
-                            <option>PROJECT</option>
-                        </select>
-                    </div>
-                </div> */}
-
-                {/* <div className="row my-4"> 
-                    <div className="col col-3 d-flex justify-content-end align-items-center">
-                        <label htmlFor="displayGrade">Display Grade As</label>
-                    </div>
-                    <div className="col col-7">
-                        <select id="displayGrade" className="form-control">
-                            <option>Percentage</option>
-                            <option>Absolute</option>
-                        </select>
-                    </div>
-                </div> */}
-
-                {/* <div className="row my-4"> 
-                    <div className="col col-3 d-flex justify-content-end align-items-center">
-                    </div>
-                    <div className="col col-7">
-                    <div className="form-check d-flex align-items-center" style={{ marginLeft: "-20px" }}>
-                        <input type="checkbox" id="countAsGrade" /> &emsp;
-                        <label htmlFor="countAsGrade">Do not count this assignment towards the final grade</label>
-                    </div>
-                    </div>
-                </div> */}
-
                 <div className="row my-4"> 
                     <div className="col col-3 d-flex justify-content-end pt-3">
                         <label htmlFor="assign">Assign</label>
@@ -200,10 +148,6 @@ function AssignmentEditor() {
                     <div className="col col-7">
                         <div className="card rounded-bottom-0">
                             <div className="card-body pb-5">
-                                {/* <div className="mb-3">
-                                    <label htmlFor="assign" className="ps-1 pt-4" style={{ fontWeight: "bold" }}>Assign to</label>
-                                    <input id="assign" className="form-control me-3" />
-                                </div> */}
                                 <div className="mb-2">
                                     <label htmlFor="due" className="ps-1 pt-4" style={{ fontWeight: "bold" }}>Due</label>
                                     <input
@@ -216,7 +160,7 @@ function AssignmentEditor() {
                                     />
                                 </div>
                                 <div className="row mb-5">
-                                    <div className="col-6">
+                                    <div className="col-md-6">
                                         <label htmlFor="from" className="ps-1 pt-4" style={{ fontWeight: "bold" }}>Available from</label>
                                         <input
                                             id="from"
@@ -227,7 +171,7 @@ function AssignmentEditor() {
                                             className="form-control"
                                         />
                                     </div>
-                                    <div className="col-6">
+                                    <div className="col-md-6">
                                         <label htmlFor="until" className="ps-1 pt-4" style={{ fontWeight: "bold" }}>Until</label>
                                         <input
                                             id="until"
@@ -241,9 +185,6 @@ function AssignmentEditor() {
                                 </div>
                             </div>
                         </div>
-                    {/* <div>
-                        <button className="btn btn-secondary border-secondary w-100 rounded-bottom-2 rounded-top-0"><FaPlus/> Add</button>
-                    </div> */}
                     </div>
                 </div>
             </div>
@@ -254,7 +195,12 @@ function AssignmentEditor() {
 
             <div className="d-flex justify-content-between me-0 mb-3 pe-0" style={{ paddingLeft: "0" }}>
                 <div className="form-check d-flex align-items-center">
-                    <input type="checkbox" id="notify" /> &emsp;
+                    <input
+                        type="checkbox"
+                        id="notify"
+                        checked={notifyChange}
+                        onChange={handleNotifyChange}
+                    /> &emsp;
                     <label htmlFor="notify">Notify users that this content has changed</label>
                 </div>
                 <div className="float-end">

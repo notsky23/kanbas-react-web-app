@@ -10,75 +10,69 @@ interface DashboardModalProps {
 }
 
 function DashboardModal({ isOpen, onClose, onSubmit, editingCourse, setEditingCourse }: DashboardModalProps) {
-    const [name, setName] = useState(editingCourse?.name || "");
-    const [number, setNumber] = useState(editingCourse?.number || "");
-    const [section, setSection] = useState(editingCourse?.section || "");
-    const [startDate, setStartDate] = useState(editingCourse?.startDate || "");
-    const [endDate, setEndDate] = useState(editingCourse?.endDate || "");
+    // Convert dates to the correct format for input[type="date"]
+    const formatDate = (dateString: string | undefined) => {
+        return dateString ? new Date(dateString).toISOString().split('T')[0] : '';
+    };
 
-    // Derived state for semester and sem based on startDate
-    const [semester, setSemester] = useState("");
-    const [sem, setSem] = useState("");
+    const initialFormState = {
+        name: '',
+        number: '',
+        section: '',
+        startDate: '',
+        endDate: '',
+        semester: '',
+        sem: '',
+        image: 'reactjs.jpg',  // Assuming a default image for new courses
+    };
+    const [formData, setFormData] = useState(initialFormState);
 
     // Ensure to reset the form states when the modal opens or editingCourse changes
     useEffect(() => {
         if (editingCourse && isOpen) {
-            setName(editingCourse.name);
-            setNumber(editingCourse.number);
-            setSection(editingCourse.section);
-            setStartDate(editingCourse.startDate);
-            setEndDate(editingCourse.endDate);
-        } else {
-            // Reset states
-            setName("");
-            setNumber("");
-            setSection("");
-            setStartDate("");
-            setEndDate("");
-            setSemester("");
-            setSem("");
+            setFormData({
+                name: editingCourse.name || '',
+                number: editingCourse.number || '',
+                section: editingCourse.section || '',
+                startDate: formatDate(editingCourse.startDate),
+                endDate: formatDate(editingCourse.endDate),
+                semester: editingCourse.semester || '',
+                sem: editingCourse.sem || '',
+                image: editingCourse.image || 'default.jpg',
+            });
         }
     }, [editingCourse, isOpen]);
 
     // Update semester and sem whenever startDate changes
     useEffect(() => {
-        if (startDate) {
-          const date = new Date(startDate);
+        if (formData.startDate) {
+          const date = new Date(formData.startDate);
           const month = date.getMonth() + 1;
           const year = date.getFullYear().toString().slice(2);
     
           if (month >= 9 && month <= 12) {
-            setSemester(`Fall ${date.getFullYear()} Semester Full Term`);
-            setSem(`FA${year}`);
+            setFormData(prev => ({ ...prev, semester: `Fall ${date.getFullYear()} Semester Full Term`, sem: `FA${year}` }));
           } else if (month >= 1 && month <= 4) {
-            setSemester(`Spring ${date.getFullYear()} Semester Full Term`);
-            setSem(`SP${year}`);
+            setFormData(prev => ({ ...prev, semester: `Spring ${date.getFullYear()} Semester Full Term`, sem: `SP${year}` }));
           } else if (month >= 5 && month <= 8) {
-            setSemester(`Summer ${date.getFullYear()} Semester Full Term`);
-            setSem(`SU${year}`);
+            setFormData(prev => ({ ...prev, semester: `Summer ${date.getFullYear()} Semester Full Term`, sem: `SU${year}` }));
           }
         } else {
             // Clear semester and sem if startDate is cleared
-            setSemester("");
-            setSem("");
+            setFormData(prev => ({ ...prev, semester: "", sem: "" }));
         }
-    }, [startDate]);
+    }, [formData.startDate]);
+
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = event.target;
+        setFormData(prev => ({ ...prev, [name]: value }));
+    };
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        const newCourseData = {
-            name,
-            number,
-            section,
-            startDate,
-            endDate,
-            semester,
-            sem,
-            image: editingCourse?.image || "reactjs.jpg", // Default image if not editing
-          };
-        onSubmit(newCourseData, !!editingCourse);
+        onSubmit(formData, !!editingCourse);
         onClose();
-    }
+    };
 
     if (!isOpen) return null;
 
@@ -96,35 +90,35 @@ function DashboardModal({ isOpen, onClose, onSubmit, editingCourse, setEditingCo
                         <div className="row mb-3">
                             <label htmlFor="name" className="col-sm-3 form-label text-md-end">Course Name</label>
                             <div className="col-sm-9">
-                                <input id="name" name="name" value={name} onChange={(e) => setName(e.target.value)} placeholder="Web Development" className="form-control" />
+                                <input id="name" name="name" value={formData.name} onChange={handleChange} placeholder="Web Development" className="form-control" />
                             </div>
                         </div>
                         <div className="row mb-3">
                             <label htmlFor="number" className="col-sm-3 form-label text-md-end">Course Number</label>
                             <div className="col-sm-9">
-                                <input id="number" name="number" value={number} onChange={(e) => setNumber(e.target.value)} placeholder="CS5610" className="form-control" />
+                                <input id="number" name="number" value={formData.number} onChange={handleChange} placeholder="CS5610" className="form-control" />
                             </div>
                         </div>
                         <div className="row mb-3">
                             <label htmlFor="section" className="col-sm-3 form-label text-md-end">Course Section</label>
                             <div className="col-sm-9">
-                                <input id="section" name="section" value={section} onChange={(e) => setSection(e.target.value)} placeholder="10001" className="form-control" />
+                                <input id="section" name="section" value={formData.section} onChange={handleChange} placeholder="10001" className="form-control" />
                             </div>
                         </div>
                         <div className="row mb-3">
                             <label htmlFor="startDate" className="col-sm-3 form-label text-md-end">Start Date</label>
                             <div className="col-sm-9">
-                                <input id="startDate" name="startDate" value={startDate} onChange={(e) => setStartDate(e.target.value)} className="form-control" type="date" />
+                                <input id="startDate" name="startDate" value={formData.startDate} onChange={handleChange} className="form-control" type="date" />
                             </div>
                         </div>
                         <div className="row mb-3">
                             <label htmlFor="endDate" className="col-sm-3 form-label text-md-end">End Date</label>
                             <div className="col-sm-9">
-                                <input id="endDate" name="endDate" value={endDate} onChange={(e) => setEndDate(e.target.value)} className="form-control" type="date" />
+                                <input id="endDate" name="endDate" value={formData.endDate} onChange={handleChange} className="form-control" type="date" />
                             </div>
                         </div>
-                        <input name="semester" type="hidden" value={semester} />
-                        <input name="sem" type="hidden" value={sem} />
+                        <input name="semester" type="hidden" value={formData.semester} />
+                        <input name="sem" type="hidden" value={formData.sem} />
                     </div>
                     <br /><hr />
 

@@ -1,15 +1,16 @@
-import {Link} from "react-router-dom";
-import Nav from "../Nav";
-import KanbasNavigation from "./Navigation";
+import { useState, useEffect } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
+import { Provider } from "react-redux";
+import store from "./store";
+import KanbasNavigation from "./Navigation";
 import Dashboard from "./Dashboard";
 import Courses from "./Courses";
+import Account from "./Account";
 // import * as db from "./Database";
-import { useState, useEffect } from "react";
-import store from "./store";
-import { Provider } from "react-redux";
 import TopMenuBar from "./TopMenuBar";
 import axios from "axios";
+import * as client from "./Dashboard/client";
+import { NotificationProvider } from "./NotificationContext";
 
 export interface Course {
    _id: string;
@@ -23,60 +24,51 @@ export interface Course {
    image: string;
  }
 
+ 
+console.log('Current API Base URL:', process.env.REACT_APP_API_BASE);
 const API_BASE = process.env.REACT_APP_API_BASE?.replace(/\/+$/, "");
 
 function Kanbas() {
-   // const [courses, setCourses] = useState<Course[]>(() => {
-   //    const savedCourses = localStorage.getItem('courses');
-   //    return savedCourses ? JSON.parse(savedCourses) : db.courses;
-   //  });
-
-   const [courses, setCourses] = useState<any[]>([]);
    // const COURSES_API = "http://localhost:4000/api/courses";
    // const COURSES_API = "https://kanbas-node-server-app-vvg4.onrender.com/api/courses";
    const COURSES_API = `${API_BASE}/api/courses`;
-
-   const findAllCourses = async () => {
-      const response = await axios.get(COURSES_API);
-      setCourses(response.data);
-   }
-   useEffect(() => {
-      findAllCourses();
-   }, []);
-
+   const [courses, setCourses] = useState<any[]>([]);
    const [editingCourse, setEditingCourse] = useState<Course | null>(null);
    const [isModalOpen, setIsModalOpen] = useState(false);
-   // Function to add a new course
-   const addCourse = async (courseData: Omit<Course, '_id'>) => {
-      const response = await axios.post(COURSES_API, { ...courseData, image: "reactjs.jpg" });
-      setCourses(prevCourses => [...prevCourses, response.data]);
-   };
-   
-   // Function to update an existing course
-   const updateCourseAPI = async (courseId: string, courseData: Omit<Course, '_id'>) => {
-      const response = await axios.put(`${COURSES_API}/${courseId}`, courseData);
-      setCourses(prevCourses =>prevCourses.map(course => course._id === courseId ? response.data : course)
-      );
-   };
+   const [lastVisitedCourseId, setLastVisitedCourseId] = useState<string | null>(null);
 
-   const addOrEditCourse = async (newCourseData: Omit<Course, '_id'>) => {
-      if (editingCourse) {
-         // Handle course update logic here
-         // const updatedCourses = courses.map(course =>
-         //    course._id === editingCourse._id ? { ...editingCourse, ...newCourseData, _id: editingCourse._id } : course
-         // );
-         // setCourses(updatedCourses);
-         await updateCourseAPI(editingCourse._id, newCourseData);
-      } else {
-         // Handle adding a new course
-         // const newCourse: Course = { _id: new Date().getTime().toString(), ...newCourseData, image: "reactjs.jpg"};
-         // setCourses([...courses, newCourse ]);
-         await addCourse(newCourseData);
+   // Read/Retrieve all the courses to be displayed in the Dashboard
+   const fetchCourses = async () => {
+      try {
+         const fetchedCourses: Course[] = await client.findAllCourses();
+         const formattedCourses = fetchedCourses.map((course: Course) => ({
+            ...course,
+            startDate: new Date(course.startDate).toISOString().split('T')[0],  // Converts to YYYY-MM-DD format
+            endDate: new Date(course.endDate).toISOString().split('T')[0]        // Converts to YYYY-MM-DD format
+         }));
+         setCourses(formattedCourses);
+      } catch (error) {
+         console.error('Failed to fetch courses:', error);
       }
-      await findAllCourses();
+   };
+   useEffect(() => {fetchCourses();}, []);
 
-      setIsModalOpen(false);
-      setEditingCourse(null); // Reset editing state
+   const addOrEditCourse = async (newCourseData: any) => {
+      try {
+        if (editingCourse) {
+          const updatedCourse = await client.updateCourse(editingCourse._id, newCourseData);
+          setCourses(courses => courses.map(course => course._id === editingCourse._id ? updatedCourse : course));
+          setIsModalOpen(false);
+          setEditingCourse(null);
+        } else {
+          const newCourse = await client.createCourse(newCourseData);
+          setCourses(courses => [...courses, newCourse]);
+        }
+        setIsModalOpen(false);
+        setEditingCourse(null);
+      } catch (error) {
+        console.error('Failed to add or edit course:', error);
+      }
    };
 
    const updateCourse = (course: Course) => {
@@ -84,51 +76,53 @@ function Kanbas() {
       setIsModalOpen(true);
    };
 
-   // const deleteCourse = (courseId: string) => {
-   //    setCourses(courses.filter((course) => course._id !== courseId));
-   // };
    const deleteCourse = async (courseId: string) => {
-      const response = await axios.delete(`${COURSES_API}/${courseId}`);
-      setCourses(courses.filter((c) => c._id !== courseId));
+      try {
+         await client.deleteCourse(courseId);
+         setCourses(courses.filter((c) => c._id !== courseId));
+      } catch (error) {
+         console.error('Failed to delete course:', error);
+      }
    };
-  
-   const [lastVisitedCourseId, setLastVisitedCourseId] = useState<string | null>(null);
 
    return(
    <Provider store={store}>
-      <div className="d-block d-md-none sticky-top bg-black text-white p-3">
-         <TopMenuBar courses={courses} />
-      </div>
-      <div className="d-flex">
-         <div className="d-none d-md-block">
-            <KanbasNavigation />
+      <NotificationProvider>
+         <div className="d-block d-md-none sticky-top bg-black text-white p-3">
+            {/* <TopMenuBar courses={courses} /> */}
+            {courses.length > 0 && <TopMenuBar courses={courses} />}
          </div>
-         <div style={{ flexGrow: 1 }}>
-            <Routes>
-               <Route path="/" element={<Navigate to="Dashboard" />} />
-               <Route path="Account" element={<div className="p-3"><h1>Account</h1></div>} />
-               <Route path="Dashboard" element={
-                  <Dashboard
-                     courses={courses}
-                     addOrEditCourse={addOrEditCourse}
-                     updateCourse={updateCourse}
-                     editingCourse={editingCourse}
-                     setEditingCourse={setEditingCourse}
-                     deleteCourse={deleteCourse}
-                     isModalOpen={isModalOpen}
-                     setIsModalOpen={setIsModalOpen}
-                  />
-               } />
-               <Route path="Courses" element={
-                  lastVisitedCourseId ? 
-                     <Navigate to={`/Kanbas/Courses/${lastVisitedCourseId}/`} replace /> : 
-                     <Navigate to="/Kanbas/Dashboard" />
-               } />
-               <Route path="Courses/:courseId/*" element={<Courses courses={courses} setLastVisitedCourseId={setLastVisitedCourseId} />} />
-            </Routes>
+         <div className="d-flex">
+            <div className="d-none d-md-block">
+               <KanbasNavigation />
+            </div>
+            <div style={{ flexGrow: 1, maxWidth: '100%' }}>
+               <Routes>
+                  <Route path="/" element={<Navigate to="Dashboard" />} />
+                  <Route path="Account/*" element={<Account />} />
+                  <Route path="Dashboard" element={
+                     <Dashboard
+                        courses={courses}
+                        addOrEditCourse={addOrEditCourse}
+                        updateCourse={updateCourse}
+                        editingCourse={editingCourse}
+                        setEditingCourse={setEditingCourse}
+                        deleteCourse={deleteCourse}
+                        isModalOpen={isModalOpen}
+                        setIsModalOpen={setIsModalOpen}
+                     />
+                  } />
+                  <Route path="Courses" element={
+                     lastVisitedCourseId ? 
+                        <Navigate to={`/Kanbas/Courses/${lastVisitedCourseId}/`} replace /> : 
+                        <Navigate to="/Kanbas/Dashboard" />
+                  } />
+                  <Route path="Courses/:courseId/*" element={<Courses courses={courses} setLastVisitedCourseId={setLastVisitedCourseId} />} />
+               </Routes>
+            </div>
+            
          </div>
-         
-      </div>
+      </NotificationProvider>
    </Provider>
       
    );
