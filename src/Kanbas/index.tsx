@@ -40,7 +40,6 @@ function Kanbas() {
    // Read/Retrieve all the courses to be displayed in the Dashboard
    const fetchCourses = async () => {
       try {
-         console.log(`Making API call to: ${COURSES_API}`);
          const fetchedCourses: Course[] = await client.findAllCourses();
          const formattedCourses = fetchedCourses.map((course: Course) => ({
             ...course,
